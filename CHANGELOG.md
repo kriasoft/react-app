@@ -11,4 +11,4 @@ All notable changes to this project will be documented in this file.
 - The initial release
 
 [unreleased]: https://github.com/kriasoft/react-app/compare/v1.0.0-alpha.1...HEAD
-[v1.0.0-alpha.2]: https://github.com/kriasoft/react-app/commit/6f86d54713a56fc34ef617d50a75cf5658d46408
+[v1.0.0-alpha.2]: https://github.com/kriasoft/react-app/commit/0afe0fe7741723ea07ee87ad4b22382c2204c575
