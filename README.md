@@ -7,13 +7,14 @@
 [![Dependency Status](http://img.shields.io/david/kriasoft/react-app.svg?style=flat-square)](https://david-dm.org/kriasoft/react-app)
 [![Online Chat](http://img.shields.io/badge/chat-%23react--starter--kit-blue.svg?style=flat-square)](https://gitter.im/kriasoft/react-starter-kit)
 
-> React App is a small library powered by [React](https://facebook.github.io/react/) and [Universal
-> Router](https://www.kriasoft.com/universal-router/) that handles routing, navigation and
-> rendering logic in isomorphic (universal) and single-page applications.
+> React App is a small library powered by [React](https://facebook.github.io/react/), [Universal
+> Router](https://www.kriasoft.com/universal-router/) and [History](https://github.com/mjackson/history)
+> that handles routing, navigation and rendering logic in isomorphic (universal) and single-page
+> applications.
 
 ### Getting Started
 
-##### Step 1
+##### Step 1: Routing
 
 Create `routes.js` file with the list of application routes, where each route is just a plain
 JavaScript object that has `path`, `action` and optionally `children` properties. For example:
@@ -43,8 +44,8 @@ const routes = [
       },
       {
         path: '/:title', // www.example.com/news/some-title
-        async action() {
-          const resp = await fetch('/api/news');
+        async action({ params }) {
+          const resp = await fetch(`/api/news/${params.title}`);
           const data = await resp.data();
           return { title: data.title, component: StoryPage, props: data };
         }
@@ -58,7 +59,7 @@ export default routes;
 
 For more information visit https://github.com/kriasoft/universal-router
 
-##### Step 2
+##### Step 2: Client-side rendering
 
 In the client-side code, launch your React app by running:
 
@@ -76,7 +77,7 @@ App.create({
 });
 ```
 
-##### Step 2 (for isomorphic apps)
+##### Step 3: Server-side rendering (optional)
 
 ```js
 import express from 'express';
