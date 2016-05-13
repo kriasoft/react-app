@@ -10,5 +10,5 @@
 import create from './create.node';
 import Link from './Link';
 
-export { create, Link }
+export { create as createApp, Link }
 export default { create, Link };

@@ -55,7 +55,7 @@ on the top-level React component.
 
 A React component that helps to implement client-side navigation, e.g. `<Link to="/about">About</Link>`.
 
-### `DefaultTemplate.js`
+### `Html.js`
 
 A React-based HTML template to be used during server-side rendering, if one wasn't provided via
 options.

@@ -9,7 +9,7 @@
 
 import React, { PropTypes } from 'react';
 
-function DefaultTemplate({ lang, title, description, bundle, content }) {
+function Html({ lang, title, description, bundle, content }) {
   return (
     <html className="no-js" lang={lang}>
       <head>
@@ -28,7 +28,7 @@ function DefaultTemplate({ lang, title, description, bundle, content }) {
   );
 }
 
-DefaultTemplate.propTypes = {
+Html.propTypes = {
   lang: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
@@ -36,4 +36,4 @@ DefaultTemplate.propTypes = {
   content: PropTypes.string.isRequired,
 };
 
-export default DefaultTemplate;
+export default Html;

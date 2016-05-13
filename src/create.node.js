@@ -12,7 +12,7 @@ import ReactDOM from 'react-dom/server';
 import { createMemoryHistory, useQueries } from 'history';
 import { match } from 'universal-router';
 import withContext from './withContext';
-import defaultTemplate from './DefaultTemplate';
+import Html from './Html';
 
 function render(template, component, context, actionResult) {
   const css = [];
@@ -21,7 +21,7 @@ function render(template, component, context, actionResult) {
     ...context,
   }, component));
   return content && `<!doctype html>\n${ReactDOM.renderToStaticMarkup(
-      React.createElement(template || defaultTemplate, {
+      React.createElement(template || Html, {
         /* start: default values */
         lang: '',
         title: '',
@@ -61,7 +61,7 @@ function createApp({ routes, context, template } = {}) {
 
       // Render React component
       if (result && result.component) {
-        html = render(template, React.createElement(result.component), ctx, result);
+        html = render(template, React.createElement(result.component, result.props), ctx, result);
       }
 
       if (!html) {
@@ -77,7 +77,7 @@ function createApp({ routes, context, template } = {}) {
         result = await match(routes, { ...ctx, canonicalPath: req.path, path: '/error', error });
 
         if (result && result.component) {
-          html = render(template, React.createElement(result.component), ctx, result);
+          html = render(template, React.createElement(result.component, result.props), ctx, result);
         }
 
         if (html) {

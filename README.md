@@ -64,14 +64,14 @@ For more information visit https://github.com/kriasoft/universal-router
 In the client-side code, launch your React app by running:
 
 ```js
-import App from 'react-app';
-import Redux from 'redux';
+import { createApp } from 'react-app';
+import { createStore } from 'redux';
 import routes from './routes';
 
-App.create({
+createApp({
   routes,
   context: {
-    store: Redux.createStore(...) // Create Flux/Redux/Relay store
+    store: createStore(...) // Create Flux/Redux/Relay store
   },
   container: document.getElementById('container')
 });
@@ -81,17 +81,17 @@ App.create({
 
 ```js
 import express from 'express';
-import App from 'react-app';
-import Redux from 'redux';
+import { createApp } from 'react-app';
+import { createStore } from 'redux';
 import routes from './routes';
 import Html from './components/Html';
 
 const app = express();
 
-app.use(App.create({
+app.use(createApp({
   routes,
   context: {
-    store: Redux.createStore(...) // Create Flux/Redux/Relay store
+    store: createStore(...) // Create Flux/Redux/Relay store
   },
   template: Html
 }));

@@ -45,7 +45,7 @@ function createApp({ routes, history, context, container, onRenderComplete }) {
               insertCss: styles => styles._insertCss(),
               /* eslint-enable no-underscore-dangle */
               ...ctx,
-            }, React.createElement(result.component)), container, () => {
+            }, React.createElement(result.component, result.props)), container, () => {
               document.title = result.title || '';
               resolve();
             });
@@ -78,7 +78,7 @@ function createApp({ routes, history, context, container, onRenderComplete }) {
                 insertCss: styles => styles._insertCss(),
                 /* eslint-enable no-underscore-dangle */
                 ...ctx,
-              }, React.createElement(result.component)), container, () => {
+              }, React.createElement(result.component, result.props)), container, () => {
                 document.title = result.title || '';
                 resolve();
               });

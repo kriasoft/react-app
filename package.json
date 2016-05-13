@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "react-app",
-  "version": "1.0.0-alpha.2",
+  "version": "1.0.0-alpha.3",
   "description": "Application renderer powered by React and Universal Router",
   "homepage": "https://www.kriasoft.com/react-app/",
   "repository": "kriasoft/react-app",
