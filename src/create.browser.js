@@ -26,7 +26,7 @@ function createApp({ routes, history, context, container, onRenderComplete }) {
       query: location.query,
       hash: location.hash,
       history,
-      ...(context instanceof Function ? context() : context),
+      ...(context instanceof Function ? context(location) : context),
     };
     try {
       result = await match(routes, ctx);
