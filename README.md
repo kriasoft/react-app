@@ -55,6 +55,11 @@ The app should become available at [http://localhost:3000](http://localhost:3000
 For more information visit https://github.com/kriasoft/react-static-boilerplate
 
 
+### Hot to Customize
+
+Coming soon...
+
+
 ### Escape Hatch
 
 If you’re a power user and you aren’t happy with the default configuration, you can always
@@ -67,8 +72,8 @@ instead of of the original `react-app` and `react-app-tools` npm modules. For ex
   "private": true,
   "dependencies": {
     "react": "^15.2.1",
-    "react-app": "^15.2.1",
     "react-app": "git+https://github.com/<username>/react-app.git",
+    "react-dom": "^15.2.1"
   },
   "devDependencies": {
     "react-app-tools": "git+https://github.com/<username>/react-app/tree/master/tools",
