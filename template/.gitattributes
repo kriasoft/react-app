@@ -8,7 +8,6 @@
 # for example, after the build script is run)
 .*      text eol=lf
 *.css   text eol=lf
-*.ejs   text eol=lf
 *.html  text eol=lf
 *.js    text eol=lf
 *.json  text eol=lf

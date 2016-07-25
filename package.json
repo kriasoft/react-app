@@ -1,98 +1,39 @@
 {
-  "private": true,
   "name": "react-app",
-  "version": "1.0.0-alpha.3",
-  "description": "Application renderer powered by React and Universal Router",
-  "homepage": "https://www.kriasoft.com/react-app/",
+  "version": "0.1.0",
+  "description": "Boilerplate and tooling for JavaScript application development with React",
   "repository": "kriasoft/react-app",
   "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
   "contributors": [
-    "Konstantin Tarkus <hello@tarkus.me> (https://angel.co/koistya)"
+    "Konstantin Tarkus <hello@tarkus.me> (https://tarkus.me)"
   ],
   "license": "MIT",
   "keywords": [
     "react",
-    "react.js",
     "reactjs",
-    "routes",
-    "router",
-    "routing",
-    "render",
-    "rendering",
-    "renderer",
-    "jsx"
+    "webpack",
+    "babel",
+    "es6",
+    "es2015",
+    "jsx",
+    "redux",
+    "browsersync",
+    "browser-sync",
+    "template",
+    "templates",
+    "boilerplate",
+    "scarrold",
+    "scaffolding"
   ],
-  "main": "main.js",
-  "jsnext:main": "main.mjs",
-  "browser": "browser.js",
-  "jsnext:browser": "browser.mjs",
-  "babel": {
-    "presets": [
-      "react",
-      "stage-1"
-    ],
-    "plugins": [
-      "transform-es2015-destructuring",
-      "transform-es2015-function-name",
-      "transform-es2015-modules-commonjs",
-      "transform-es2015-parameters"
-    ]
+  "engines": {
+    "node": ">=6",
+    "npm": ">=3.8"
   },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": "airbnb"
-  },
-  "dependencies": {
-    "babel-runtime": "^6.6.1",
-    "history": "^2.1.1",
-    "universal-router": "^1.2.1"
-  },
-  "peerDependencies": {
-    "react": "^0.14.0 || ^15.0.0",
-    "react-dom": "^0.14.0 || ^15.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.8.0",
-    "babel-core": "^6.8.0",
-    "babel-eslint": "^6.0.4",
-    "babel-plugin-external-helpers": "^6.8.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.8.0",
-    "babel-plugin-transform-es2015-function-name": "^6.8.0",
-    "babel-plugin-transform-es2015-modules-commonjs": "^6.8.0",
-    "babel-plugin-transform-es2015-parameters": "^6.8.0",
-    "babel-plugin-transform-runtime": "^6.8.0",
-    "babel-preset-es2015-rollup": "^1.1.1",
-    "babel-preset-react": "^6.5.0",
-    "babel-preset-stage-1": "^6.5.0",
-    "babel-register": "^6.8.0",
-    "chai": "^3.5.0",
-    "coveralls": "^2.11.9",
-    "del": "^2.2.0",
-    "eslint": "^2.9.0",
-    "eslint-config-airbnb": "^9.0.1",
-    "eslint-plugin-import": "^1.8.0",
-    "eslint-plugin-jsx-a11y": "^1.2.0",
-    "eslint-plugin-react": "^5.1.1",
-    "istanbul": "^1.0.0-alpha.2",
-    "jsdom": "^9.0.0",
-    "mocha": "^2.4.5",
-    "mocha-jsdom": "^1.1.0",
-    "react": "^15.0.2",
-    "react-dom": "^15.0.2",
-    "rollup": "^0.26.3",
-    "rollup-plugin-babel": "^2.4.0",
-    "rollup-plugin-uglify": "^0.3.1",
-    "sinon": "^2.0.0-pre"
-  },
-  "scripts": {
-    "lint": "eslint src test tools",
-    "test": "mocha --compilers js:babel-register",
-    "test:watch": "mocha --compilers js:babel-register --reporter min --watch",
-    "test:cover": "babel-node ./node_modules/istanbul/lib/cli.js cover ./node_modules/mocha/bin/_mocha",
-    "coveralls": "cat ./coverage/lcov.info | coveralls",
-    "build": "node tools/build",
-    "prepublish": "npm run build",
-    "publish:docs": "easystatic deploy docs --repo kriasoft/babel-starter-kit",
-    "start": "easystatic start docs"
+  "files": [
+    "bin",
+    "template"
+  ],
+  "bin": {
+    "react-app": "./bin/react-app.js"
   }
 }
