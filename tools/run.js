@@ -1,5 +1,5 @@
 /**
- * Build Automation Tools for React Apps
+ * Build Automation Tools for React Applications
  * https://github.com/kriasoft/react-app-tools
  *
  * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
@@ -56,7 +56,7 @@ tasks.set('bundle', () => {
 //
 // Build website and launch it in a browser for testing (default)
 // -----------------------------------------------------------------------------
-tasks.set('start', () => {
+tasks.set('run', () => {
   let count = 0;
   global.HMR = !process.argv.includes('--no-hmr'); // Hot Module Replacement (HMR)
   return new Promise(resolve => {

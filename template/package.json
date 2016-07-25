@@ -10,6 +10,7 @@
     "fastclick": "^1.0.6",
     "history": "^3.0.0",
     "react": "^15.2.1",
+    "react-app": "1.0.0",
     "react-dom": "^15.2.1",
     "react-mdl": "^1.6.1",
     "react-redux": "^4.4.5",
@@ -17,7 +18,7 @@
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
-    "react-app-tools": "0.1.0"
+    "react-app-tools": "0.2.0"
   },
   "babel": {
     "presets": [
@@ -35,6 +36,6 @@
   },
   "scripts": {
     "build": "react-app build",
-    "start": "react-app start"
+    "start": "react-app run"
   }
 }

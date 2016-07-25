@@ -1,5 +1,5 @@
 /**
- * Build Automation Tools for React Apps
+ * Build Automation Tools for React Applications
  * https://github.com/kriasoft/react-app-tools
  *
  * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
