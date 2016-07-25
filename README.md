@@ -55,6 +55,32 @@ The app should become available at [http://localhost:3000](http://localhost:3000
 For more information visit https://github.com/kriasoft/react-static-boilerplate
 
 
+### Escape Hatch
+
+If you’re a power user and you aren’t happy with the default configuration, you can always
+[fork `react-app` repository](https://github.com/kriasoft/react-app/fork), customize it and use it
+instead of of the original `react-app` and `react-app-tools` npm modules. For example
+(`package.json`):
+
+```js
+{
+  "private": true,
+  "dependencies": {
+    "react": "^15.2.1",
+    "react-app": "^15.2.1",
+    "react-app": "git+https://github.com/<username>/react-app.git",
+  },
+  "devDependencies": {
+    "react-app-tools": "git+https://github.com/<username>/react-app/tree/master/tools",
+  },
+  "scripts": {
+    "build": "react-app build",
+    "start": "react-app run",
+  }
+}
+```
+
+
 ### License
 
 Copyright © 2016-present Kriasoft, LLC. This source code is licensed under the MIT license found in
