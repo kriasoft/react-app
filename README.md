@@ -1,5 +1,7 @@
 # React Application Starter Kit
 
+[![Join the chat at https://gitter.im/kriasoft/react-app](https://badges.gitter.im/kriasoft/react-app.svg)](https://gitter.im/kriasoft/react-app?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 Boilerplate and tooling for JavaScript application development with [React](https://facebook.github.io/react/)
 
 ### TL;DR
