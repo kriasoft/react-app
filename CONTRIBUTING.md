@@ -1,7 +1,6 @@
-# Contributing to React App Starter Kit
+# Contributing to React App SDK
 
-♥ **React App Starter Kit** and want to get involved? Thanks! There are plenty of ways you can
-help!
+♥ **React App SDK** and want to get involved? Thanks! There are plenty of ways you can help!
 
 Please take a moment to review this document in order to make the contribution process easy and
 effective for everyone involved.

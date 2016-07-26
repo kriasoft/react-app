@@ -1,4 +1,4 @@
-# React App Starter Kit
+# React App SDK
 
 **Boilerplate and tooling** for JavaScript application development with **[React](https://facebook.github.io/react/)**
 
@@ -87,7 +87,7 @@ instead of of the original `react-app` and `react-app-tools` npm modules. For ex
 
 ### Contribute
 
-Help shape the future of **React App Starter Kit** by joining our [community](https://gitter.im/kriasoft/react-app)
+Help shape the future of **React App SDK** by joining our [community](https://gitter.im/kriasoft/react-app)
 today, check out the [open issues](https://github.com/kriasoft/react-app/issues), submit [new
 feature ideas](https://github.com/kriasoft/react-app/issues/new?labels=enhancement) and [bug
 reports](https://github.com/kriasoft/react-app/issues/new?labels=bug), send us [pull
