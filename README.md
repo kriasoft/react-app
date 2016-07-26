@@ -1,6 +1,6 @@
-# React Application Starter Kit
+# React App Starter Kit
 
-Boilerplate and tooling for JavaScript application development with [React](https://facebook.github.io/react/)
+**Boilerplate and tooling** for JavaScript application development with **[React](https://facebook.github.io/react/)**
 
 ### TL;DR
 
@@ -11,20 +11,21 @@ $ react-app run
 ```
 
 **See** [demo](https://rsb.kriasoft.com), [docs](https://github.com/kriasoft/react-static-boilerplate/tree/master/docs)
-&nbsp;|&nbsp; **Follow us** on [Gitter](https://gitter.im/kriasoft/react-static-boilerplate) or [Twitter](https://twitter.com/ReactStatic)
+&nbsp;|&nbsp; **Join** [#react-app](https://gitter.im/kriasoft/react-app) on Gitter to stay up to date
+&nbsp;|&nbsp; **Follow us** on [Twitter](https://twitter.com/ReactStarter)
 &nbsp;|&nbsp; **Send feedback** to [@koistya](https://twitter.com/koistya)
 
 
 ### Features
 
-&nbsp; &nbsp; ✓ Modern JavaScript syntax ([ES2015](http://babeljs.io/docs/learn-es2015/)+) via [Babel](http://babeljs.io/), modern CSS syntax via [PostCSS](https://github.com/postcss/postcss)<br>
+&nbsp; &nbsp; ✓ Zero-configuration, no build scripts, just one development dependency (see [`package.json`](template/package.json))<br>
+&nbsp; &nbsp; ✓ Modern JavaScript syntax ([ES2015](http://babeljs.io/docs/learn-es2015/)+) via [Babel](http://babeljs.io/) or [TypeScript](https://www.typescriptlang.org/) (planned), modern CSS syntax via [PostCSS](https://github.com/postcss/postcss)<br>
 &nbsp; &nbsp; ✓ Component-based UI architecture via [React](http://facebook.github.io/react/), [Webpack](https://webpack.github.io/) and [CSS Modules](https://github.com/css-modules/css-modules)<br>
 &nbsp; &nbsp; ✓ Application state management /w time-travel debugging via [Redux](http://redux.js.org/) (see [`main.js`](template/main.js), [`core/store.js`](template/core/store.js))<br>
 &nbsp; &nbsp; ✓ Routing and navigation via [`path-to-regexp`](https://github.com/pillarjs/path-to-regexp) and [`history`](https://github.com/mjackson/history) (see [`main.js`](template/main.js), [`core/router.js`](template/core/router.js), [`utils/routes-loader.js`](template/utils/routes-loader.js))<br>
 &nbsp; &nbsp; ✓ [Code-splitting](https://github.com/webpack/docs/wiki/code-splitting) and async chunk loading via [Webpack](https://webpack.github.io/) and [ES6 System.import()](http://www.2ality.com/2014/09/es6-modules-final.html)<br>
 &nbsp; &nbsp; ✓ Cross-device testing with [Browsersync](https://browsersync.io/) /w Hot Module Replacement ([HMR](https://webpack.github.io/docs/hot-module-replacement.html)) and [React Hot Loader](http://gaearon.github.io/react-hot-loader/)<br>
-&nbsp; &nbsp; ✓ Zero-configuration, no build scripts, just one development dependency (`react-app-tools`)<br>
-&nbsp; &nbsp; ✓ **24/7** community support on [Gitter](https://gitter.im/kriasoft/react-static-boilerplate); consulting and customization requests on [Codementor](https://www.codementor.io/koistya)<br>
+&nbsp; &nbsp; ✓ **24/7** community support on [Gitter](https://gitter.im/kriasoft/react-app) and [SO](http://stackoverflow.com/questions/tagged/react-app); consulting and customization requests on [Codementor](https://www.codementor.io/koistya) or [Skype](http://hatscripts.com/addskype?koistya)<br>
 
 
 ### Requirements
@@ -82,6 +83,21 @@ instead of of the original `react-app` and `react-app-tools` npm modules. For ex
   }
 }
 ```
+
+
+### Contribute
+
+Help shape the future of **React App Starter Kit** by joining our [community](https://gitter.im/kriasoft/react-app)
+today, check out the [open issues](https://github.com/kriasoft/react-app/issues), submit [new
+feature ideas](https://github.com/kriasoft/react-app/issues/new?labels=enhancement) and [bug
+reports](https://github.com/kriasoft/react-app/issues/new?labels=bug), send us [pull
+requests](CONTRIBUTING.md#pull-requests)!
+
+
+### Support
+
+* [#react-app](http://stackoverflow.com/questions/tagged/react-app) on Stack Overflow
+* [#react-app](https://gitter.im/kriasoft/react-app) chat room on Gitter
 
 
 ### License
