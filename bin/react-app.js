@@ -15,6 +15,8 @@ function copy(src, dest) {
     fs.readdirSync(src).forEach(childPath => {
       copy(path.join(src, childPath), path.join(dest, childPath));
     });
+  } else {
+    fs.createReadStream(src).pipe(fs.createWriteStream(dest));
   }
 }
 
@@ -28,7 +30,11 @@ function scaffold() {
   const npm = /^win/.test(process.platform) ? 'npm.cmd' : 'npm';
   spawn(npm, ['install'], { stdio: ['ignore', 'inherit', 'inherit'] }).on('close', code => {
     if (code === 0) {
-      console.log('\nAll done! Now you can launch your app by running: npm start\n');
+      console.log(`
+All done! Now you can launch your app by running: npm start
+
+For more information visit https://github.com/kriasoft/react-app
+`);
       process.exit(0);
     } else {
       console.error(new Error('Failed to install npm packages.'));
