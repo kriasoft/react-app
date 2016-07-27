@@ -1,6 +1,6 @@
 # React App SDK &nbsp; <a href="https://github.com/kriasoft/react-app/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-app.svg?style=social&label=Star&maxAge=2592000" height="20"></a> <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&label=Follow&maxAge=2592000" height="20"></a>
 
-**CLI tools and templates** for authoring **[React](https://facebook.github.io/react/)** applications with a single dev dependency and no configurations. 
+**CLI tools and templates** for authoring **[React](https://facebook.github.io/react/)** applications with a single dev dependency and zero configurations. 
 
 
 ### TL;DR
@@ -64,15 +64,14 @@ Coming soon...
 
 If you’re a power user and you aren’t happy with the default configuration, you can always
 [fork `react-app` repository](https://github.com/kriasoft/react-app/fork), customize it and use it
-instead of of the original `react-app` and `react-app-tools` npm modules. For example
-(`package.json`):
+instead of of the original `react-app-tools` npm module. For example (`package.json`):
 
 ```js
 {
   "private": true,
   "dependencies": {
     "react": "^15.2.1",
-    "react-app": "git+https://github.com/<username>/react-app.git",
+    "react-app": "^1.0.1",
     "react-dom": "^15.2.1"
   },
   "devDependencies": {
