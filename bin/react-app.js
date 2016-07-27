@@ -62,14 +62,14 @@ switch (process.argv[2] /* command to run */) {
     }
     break;
   case 'build':
-    var run = require('react-app-tools/run');
+    var run = require(path.resolve(process.cwd(), './node_modules/react-app-tools/run'));
     Promise.resolve()
       .then(() => run('clean'))
       .then(() => run('bundle'));
     break;
   case 'run':
   case 'start':
-    var run = require('react-app-tools/run');
+    var run = require(path.resolve(process.cwd(), './node_modules/react-app-tools/run'));
     Promise.resolve()
       .then(() => run('clean'))
       .then(() => run('run'));
