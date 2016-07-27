@@ -1,6 +1,7 @@
-# React App SDK
+# React App SDK &nbsp; <a href="https://github.com/kriasoft/react-app/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-app.svg?style=social&label=Star&maxAge=2592000" height="20"></a> <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&label=Follow&maxAge=2592000" height="20"></a>
 
-**Boilerplate and tooling** for JavaScript application development with **[React](https://facebook.github.io/react/)**
+**CLI tools and templates** for authoring **[React](https://facebook.github.io/react/)** applications with a single dev dependency and no configurations. 
+
 
 ### TL;DR
 
@@ -12,7 +13,7 @@ $ react-app run
 
 **See** [demo](https://rsb.kriasoft.com), [docs](https://github.com/kriasoft/react-static-boilerplate/tree/master/docs)
 &nbsp;|&nbsp; **Join** [#react-app](https://gitter.im/kriasoft/react-app) on Gitter to stay up to date
-&nbsp;|&nbsp; **Follow us** on [Twitter](https://twitter.com/ReactStarter)
+&nbsp;|&nbsp; **Follow us** on [Twitter](https://twitter.com/ReactSDK)
 &nbsp;|&nbsp; **Send feedback** to [@koistya](https://twitter.com/koistya)
 
 
