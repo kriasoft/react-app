@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -9,27 +8,26 @@
  */
 
 import React from 'react';
+import history from '../../core/history';
 import Link from '../Link';
+import s from './Navigation.css';
 
-class Navigation extends React.Component {
-
-  componentDidMount() {
-    window.componentHandler.upgradeElement(this.root);
-  }
-
-  componentWillUnmount() {
-    window.componentHandler.downgradeElements(this.root);
-  }
-
-  render() {
-    return (
-      <nav className="mdl-navigation" ref={node => (this.root = node)}>
-        <Link className="mdl-navigation__link" to="/">Home</Link>
-        <Link className="mdl-navigation__link" to="/about">About</Link>
-      </nav>
-    );
-  }
-
+function Navigation() {
+  const path = history.getCurrentLocation().pathname;
+  const linkClass = href => `${s.link}${path === href ? ` ${s.active}` : ''}`;
+  return (
+    <nav className={s.nav}>
+      <Link className={linkClass('/')} to="/">
+        About
+      </Link>
+      <Link className={linkClass('/get-started')} to="/get-started">
+        Get Started
+      </Link>
+      <Link className={linkClass('/404')} to="/404">
+        Not Found
+      </Link>
+    </nav>
+  );
 }
 
 export default Navigation;

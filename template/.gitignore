@@ -8,6 +8,3 @@ public/index.html
 # Node.js and NPM
 node_modules
 npm-debug.log
-
-# Firebase
-firebase-debug.log

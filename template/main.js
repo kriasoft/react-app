@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -8,12 +7,9 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import 'babel-polyfill';
 import 'whatwg-fetch';
-
 import React from 'react';
 import ReactDOM from 'react-dom';
-import FastClick from 'fastclick';
 import { Provider } from 'react-redux';
 
 import store from './core/store';
@@ -39,11 +35,6 @@ function render(location) {
 // For more information visit https://github.com/ReactJSTraining/history/tree/master/docs#readme
 history.listen(render);
 render(history.getCurrentLocation());
-
-// Eliminates the 300ms delay between a physical tap
-// and the firing of a click event on mobile browsers
-// https://github.com/ftlabs/fastclick
-FastClick.attach(document.body);
 
 // Enable Hot Module Replacement (HMR)
 if (module.hot) {

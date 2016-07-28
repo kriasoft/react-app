@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -57,9 +56,15 @@ function resolve(routes, context) {
     }
 
     // Check if the route has any data requirements, for example:
-    // { path: '/tasks/:id', data: { task: 'GET /api/tasks/$id' }, page: './pages/task' }
+    //
+    //   {
+    //     path: '/tasks/:id',
+    //     data: { task: 'GET /api/tasks/$id' },
+    //     component: './routes/TaskDetails'
+    //   }
+    //
     if (route.data) {
-      // Load page component and all required data in parallel
+      // Load route component and all required data in parallel
       const keys = Object.keys(route.data);
       return Promise.all([
         route.load(),
@@ -70,13 +75,13 @@ function resolve(routes, context) {
           // TODO: Replace query parameters with actual values coming from `params`
           return fetch(url, { method }).then(resp => resp.json());
         }),
-      ]).then(([Page, ...data]) => {
+      ]).then(([Component, ...data]) => {
         const props = keys.reduce((result, key, i) => ({ ...result, [key]: data[i] }), {});
-        return <Page route={route} error={context.error} {...props} />;
+        return <Component route={route} error={context.error} {...props} />;
       });
     }
 
-    return route.load().then(Page => <Page route={route} error={context.error} />);
+    return route.load().then(Component => <Component route={route} error={context.error} />);
   }
 
   const error = new Error('Page not found');

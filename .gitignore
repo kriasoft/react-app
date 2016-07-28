@@ -4,6 +4,8 @@
 # Node.js and NPM
 node_modules
 npm-debug.log
+tools/node_modules
+tools/npm-debug.log
 *.tgz
 
 # Misc

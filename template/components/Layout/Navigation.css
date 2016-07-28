@@ -7,12 +7,19 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-import { expect } from 'chai';
+.nav {
 
-describe('test suite', () => {
+}
 
-  it('test', () => {
-    expect(true).to.be.equal.true;
-  });
+.link {
+  display: inline-block;
+  padding: 10px 20px;
+  border-bottom: 4px solid transparent;
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
 
-});
+.active {
+  border-bottom-color: #fff;
+}

@@ -1,5 +1,5 @@
 ---
-title: About Us
+title: Getting Started
 ---
 
 ## Cadme comitum fecere

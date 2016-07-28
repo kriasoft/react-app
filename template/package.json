@@ -5,20 +5,16 @@
     "npm": ">=3.8"
   },
   "dependencies": {
-    "babel-polyfill": "^6.9.1",
-    "classnames": "^2.2.5",
-    "fastclick": "^1.0.6",
     "history": "^3.0.0",
     "react": "^15.2.1",
-    "react-app": "^1.0.2",
+    "react-app": "^1.1.0",
     "react-dom": "^15.2.1",
-    "react-mdl": "^1.6.1",
     "react-redux": "^4.4.5",
     "redux": "^3.5.2",
     "whatwg-fetch": "^1.0.0"
   },
   "devDependencies": {
-    "react-app-tools": "^0.2.1"
+    "react-app-tools": "^1.1.0"
   },
   "babel": {
     "presets": [
@@ -35,6 +31,7 @@
     "extends": "airbnb"
   },
   "scripts": {
+    "lint": "eslint actions components core routes test utils main.js",
     "build": "react-app build",
     "start": "react-app run"
   }

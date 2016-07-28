@@ -1,12 +1,49 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
+
+html {
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+
+  /* Prevent iOS and IE text size adjust after device orientation change,
+   * without disabling user zoom. */
+  -ms-text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: rgb(253, 253, 253);
+  color: #222;
+  font-size: 1em;
+  line-height: 1.4;
+}
+
+a {
+  /* Remove the gray background color from active links in IE 10. */
+  background-color: transparent;
+}
+
+a:active,
+a:hover {
+  /* Improve readability of focused elements when they are also in an
+   * active/hover state. */
+  outline: 0;
+}
+
+h1 {
+  margin: 0.67em 0;
+  font-size: 2em;
+}
+
+.root {
+
+}
 
 .content {
   margin: 0 auto;

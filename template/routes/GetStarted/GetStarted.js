@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -10,8 +9,8 @@
 
 import React from 'react';
 import Layout from '../../components/Layout';
-import s from './styles.css';
-import { title, html } from './index.md';
+import s from './GetStarted.css';
+import { title, html } from './GetStarted.md';
 
 class AboutPage extends React.Component {
 

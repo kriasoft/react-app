@@ -1,30 +1,41 @@
 /**
-* React Static Boilerplate
-* https://github.com/kriasoft/react-static-boilerplate
-*
-* Copyright © 2015-present Kriasoft, LLC. All rights reserved.
-*
-* This source code is licensed under the MIT license found in the
-* LICENSE.txt file in the root directory of this source tree.
-*/
+ * React App SDK (https://github.com/kriasoft/react-app)
+ *
+ * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.txt file in the root directory of this source tree.
+ */
 
-.row {
-  padding: 40px;
+.header {
+  background-color: #3f51b5;
+  background-image: linear-gradient(-225deg,#3db0ef,#5e5bb7);
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1000px;
 }
 
 .title {
+  display: block;
+  padding: 2em 0 1.75em;
   color: #fff;
+  text-align: center;
   text-decoration: none;
+  font-weight: 100;
+  font-size: 48px;
+  font-family: Roboto, sans-serif;
+}
+
+.title strong {
+  font-weight: 300;
 }
 
 @media screen and (max-width: 1024px) {
 
-  .header {
-    display: flex;
-  }
-
-  .row {
-    padding: 0 16px;
+  .title {
+    font-size: 36px;
   }
 
 }

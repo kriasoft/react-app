@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -19,7 +18,7 @@ function escape(text) {
  *
  *   {
  *     "path": "/about",
- *     "page": "./pages/about"
+ *     "component": "./routes/About"
  *   }
  *
  * becomes
@@ -28,8 +27,8 @@ function escape(text) {
  *     path: '/about',
  *     pattern: /^\\/about(?:\/(?=$))?$/i,
  *     keys: [],
- *     page: './pages/about',
- *     load: function () { return new Promise(resolve => require(['./pages/about'], resolve)); }
+ *     component: './routes/About',
+ *     load: function () { return new Promise(resolve => require(['./routes/About'], resolve)); }
  *   }
  */
 module.exports = function routesLoader(source) {
@@ -56,11 +55,11 @@ module.exports = function routesLoader(source) {
     output.push(`    path: '${escape(route.path)}',\n`);
     output.push(`    pattern: ${pattern.toString()},\n`);
     output.push(`    keys: ${JSON.stringify(keys)},\n`);
-    output.push(`    page: '${escape(route.page)}',\n`);
+    output.push(`    component: '${escape(route.component)}',\n`);
     if (route.data) {
       output.push(`    data: ${JSON.stringify(route.data)},\n`);
     }
-    output.push(`    load() {\n      return ${require(route.page)};\n    },\n`);
+    output.push(`    load() {\n      return ${require(route.component)};\n    },\n`);
     output.push('  },\n');
   }
 

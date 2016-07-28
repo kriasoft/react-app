@@ -1,8 +1,7 @@
 /**
- * React Static Boilerplate
- * https://github.com/koistya/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
- * Copyright © 2015-2016 Konstantin Tarkus (@koistya)
+ * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
@@ -33,25 +32,25 @@
   color: var(--color);
   letter-spacing: 0.02em;
   font-weight: 300;
-  font-size: 15em;
+  font-size: 12em;
   line-height: 1;
 }
 
 .title {
+  margin: 0;
   padding-bottom: 0.5em;
   color: var(--color);
   letter-spacing: 0.02em;
   font-weight: 400;
-  font-size: 2em;
-  font-family: 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  font-size: 1.75em;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   line-height: 1em;
 }
 
 .text {
   padding-bottom: 0;
   color: color(var(--color) alpha(50%));
-  font-size: 1.125em;
-  line-height: 1.5em;
+  line-height: 1em;
 }
 
 @media only screen and (max-width: 280px) {
@@ -75,7 +74,7 @@
   }
 
   .code {
-    font-size: 10em;
+    font-size: 8em;
   }
 
   .title {

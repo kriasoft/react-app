@@ -1,6 +1,5 @@
 /**
- * React Static Boilerplate
- * https://github.com/kriasoft/react-static-boilerplate
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
  * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
@@ -9,38 +8,20 @@
  */
 
 import React, { PropTypes } from 'react';
-import cx from 'classnames';
 import Header from './Header';
-import Footer from '../Footer';
 import s from './Layout.css';
 
-class Layout extends React.Component {
-
-  static propTypes = {
-    className: PropTypes.string,
-  };
-
-  componentDidMount() {
-    window.componentHandler.upgradeElement(this.root);
-  }
-
-  componentWillUnmount() {
-    window.componentHandler.downgradeElements(this.root);
-  }
-
-  render() {
-    return (
-      <div className="mdl-layout mdl-js-layout" ref={node => (this.root = node)}>
-        <div className="mdl-layout__inner-container">
-          <Header />
-          <main className="mdl-layout__content">
-            <div {...this.props} className={cx(s.content, this.props.className)} />
-            <Footer />
-          </main>
-        </div>
-      </div>
-    );
-  }
+function Layout(props) {
+  return (
+    <div className={s.root}>
+      <Header />
+      <main className={s.content}>
+        <div {...props} className={`${s.content}${props.className ? ` ${props.className}` : ''}`} />
+      </main>
+    </div>
+  );
 }
+
+Layout.propTypes = { className: PropTypes.string };
 
 export default Layout;

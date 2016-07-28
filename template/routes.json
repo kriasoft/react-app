@@ -1,7 +1,7 @@
 [
   {
     "path": "/",
-    "page": "./pages/home",
+    "component": "./routes/Home",
     "chunk": "main",
     "data": {
       "articles": "GET https://gist.githubusercontent.com/koistya/a32919e847531320675764e7308b796a/raw/articles.json"
@@ -9,15 +9,15 @@
   },
   {
     "path": "/error",
-    "page": "./pages/error",
+    "component": "./routes/Error",
     "chunk": "main"
   },
   {
-    "path": "/about",
-    "page": "./pages/about"
+    "path": "/get-started",
+    "component": "./routes/GetStarted"
   },
   {
     "path": "/tasks/:status(pending|completed)?",
-    "page": "./pages/home"
+    "component": "./routes/Home"
   }
 ]
