@@ -12,10 +12,11 @@ $ react-app run
 ```
 
 **See** [demo](https://rsb.kriasoft.com), [docs](https://github.com/kriasoft/react-static-boilerplate/tree/master/docs)
-&nbsp;|&nbsp; **Join** [#react-app](https://gitter.im/kriasoft/react-app) on Gitter to stay up to date
+&nbsp;|&nbsp; **Join** [#react-app](https://gitter.im/kriasoft/react-app) chat on Gitter to stay up to date
 &nbsp;|&nbsp; **Follow us** on [Twitter](https://twitter.com/ReactSDK)
 &nbsp;|&nbsp; **Send feedback** to [@koistya](https://twitter.com/koistya)
 
+<img src="https://koistya.github.io/files/react-app-starter-kit.png" width="100%">
 
 ### Features
 
@@ -52,7 +53,7 @@ $ react-app run
 
 The app should become available at [http://localhost:3000](http://localhost:3000)
 
-For more information visit https://github.com/kriasoft/react-static-boilerplate
+For more information visit https://github.com/kriasoft/react-app/tree/master/template
 
 
 ### How to Customize
@@ -71,7 +72,7 @@ instead of of the original `react-app-tools` npm module. For example (`package.j
   "private": true,
   "dependencies": {
     "react": "^15.2.1",
-    "react-app": "^1.0.1",
+    "react-app": "^1.1.1",
     "react-dom": "^15.2.1"
   },
   "devDependencies": {

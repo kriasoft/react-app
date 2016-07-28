@@ -49,19 +49,19 @@ $ npm start
 
 The app should become available at [http://localhost:3000](http://localhost:3000)
 
-### Getting Started
+### Common Tasks
 
 - In order to modify the layout of your site, edit `components/Layout` React component
-- To add custom fonts, update page metadata edit `index.ejs`
-- To add a new page/screen add new entry to the `routes.json` file with routing information, plus
-  add a React component inside the `routes` folder that must be responsible for rendering that route
-- Need to create small, reusable in many places component (e.g. Button, Slider)? Put that it into
-  the `components` folder.
+- To add custom fonts, page metadata edit `index.ejs` file in the root of your project
+- To add a new page/screen add a new entry to the `routes.json` file with routing information, plus
+  add a React component inside the `routes` folder that will be responsible for rendering that route
+- Need to create small, reusable component (e.g. Button, Slider)? Put that it into the `components`
+  folder.
 - Style your components with either CSS or inline styles. This project is pre-configured with CSS
   Modules as well as PostCSS with a nice set of useful plugins (no need to use Sass or LESS).
 - Use `core/history.js` file for navigation, learn more about it [here](https://github.com/ReactTraining/history/tree/master/docs)
-- Learn how to get effectively use [Browsersync](https://browsersync.io/), it will help with
-  cross-device testing
+- Learn how to effectively use [Browsersync](https://browsersync.io/), it will help with
+  cross-device testing.
 
 
 ### Support
