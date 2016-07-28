@@ -194,7 +194,19 @@ const config = {
 // Optimize the bundle in release (production) mode
 if (!isDebug) {
   config.plugins.push(new webpack.optimize.DedupePlugin());
-  config.plugins.push(new webpack.optimize.UglifyJsPlugin({ compress: { warnings: isVerbose } }));
+  config.plugins.push(new webpack.optimize.UglifyJsPlugin({
+    compress: {
+      screw_ie8: true,
+      warnings: isVerbose,
+    },
+    mangle: {
+      screw_ie8: true,
+    },
+    output: {
+      comments: false,
+      screw_ie8: true,
+    },
+  }));
   config.plugins.push(new webpack.optimize.AggressiveMergingPlugin());
 }
 
