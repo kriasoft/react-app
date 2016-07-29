@@ -138,5 +138,17 @@ Adhering to the following process is the best way to get your work included in t
 7. [Open a Pull Request](https://help.github.com/articles/using-pull-requests/) with a clear title
    and description.
 
+<a name="testing"></a>
+## Testing
+
+```bash
+$ npm install
+$ mkdir test
+$ cd test
+$ node ../app/bin/react-app new -t
+$ node ../app/bin/react-app build
+$ node ../app/bin/react-app run
+```
+
 **IMPORTANT**: By submitting a patch, you agree to allow the project owners to license your work
 under the terms of the [MIT License](LICENSE.txt).

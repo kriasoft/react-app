@@ -1,67 +1,22 @@
 /**
- * Build Automation Tools for React Applications
- * https://github.com/kriasoft/react-app-tools
+ * React App SDK (https://github.com/kriasoft/react-app)
  *
- * Copyright © 2016-present Kriasoft, LLC. All rights reserved.
+ * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE.txt file in the root directory of this source tree.
  */
 
 const fs = require('fs');
-const del = require('del');
 const ejs = require('ejs');
 const webpack = require('webpack');
 
-// TODO: Update configuration settings
-const config = {
-  title: 'React Static Boilerplate',        // Your website title
-  url: 'https://rsb.kriasoft.com',          // Your website URL
-  project: 'react-static-boilerplate',      // Firebase project. See README.md -> How to Deploy
-  trackingID: 'UA-XXXXX-Y',                 // Google Analytics Site's ID
-};
-
-const tasks = new Map();
-
-function run(task) {
-  const start = new Date();
-  console.log(`Starting '${task}'...`);
-  return Promise.resolve().then(() => tasks.get(task)()).then(() => {
-    console.log(`Finished '${task}' after ${new Date().getTime() - start.getTime()}ms`);
-  }, err => console.error(err.stack));
-}
-
-//
-// Clean up the output directory
-// -----------------------------------------------------------------------------
-tasks.set('clean', () => del(['public/dist/*', '!public/dist/.git'], { dot: true }));
-
-//
-// Bundle JavaScript, CSS and image files with Webpack
-// -----------------------------------------------------------------------------
-tasks.set('bundle', () => {
-  const webpackConfig = require('./webpack.config');
-  return new Promise((resolve, reject) => {
-    webpack(webpackConfig).run((err, stats) => {
-      if (err) {
-        reject(err);
-      } else {
-        console.log(stats.toString(webpackConfig.stats));
-        resolve();
-      }
-    });
-  });
-});
-
-//
-// Build website and launch it in a browser for testing (default)
-// -----------------------------------------------------------------------------
-tasks.set('run', () => {
+module.exports = () => {
   let count = 0;
   global.HMR = !process.argv.includes('--no-hmr'); // Hot Module Replacement (HMR)
   return new Promise(resolve => {
     const bs = require('browser-sync').create();
-    const webpackConfig = require('./webpack.config');
+    const webpackConfig = require('../webpack.config.js');
     const compiler = webpack(webpackConfig);
     // Node.js middleware that compiles application in watch mode with HMR support
     // http://webpack.github.io/docs/webpack-dev-middleware.html
@@ -95,6 +50,4 @@ tasks.set('run', () => {
       }
     });
   });
-});
-
-module.exports = run;
+};

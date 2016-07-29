@@ -1,0 +1,38 @@
+{
+  "name": "react-app",
+  "version": "1.1.1",
+  "description": "Boilerplate and tooling for JavaScript application development with React",
+  "repository": "kriasoft/react-app",
+  "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
+  "contributors": [
+    "Konstantin Tarkus <hello@tarkus.me> (https://tarkus.me)"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "reactjs",
+    "webpack",
+    "babel",
+    "es6",
+    "es2015",
+    "jsx",
+    "redux",
+    "browsersync",
+    "browser-sync",
+    "template",
+    "templates",
+    "boilerplate",
+    "scarrold",
+    "scaffolding"
+  ],
+  "engines": {
+    "node": ">=6",
+    "npm": ">=3.8"
+  },
+  "files": [
+    "bin"
+  ],
+  "bin": {
+    "react-app": "./bin/react-app.js"
+  }
+}
