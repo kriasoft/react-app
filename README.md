@@ -76,7 +76,7 @@ instead of of the original `react-app-tools` npm module. For example (`package.j
     "react-dom": "^15.2.1"
   },
   "devDependencies": {
-    "react-app-tools": "git+https://github.com/<username>/react-app/tree/master/tools",
+    "react-app-tools": "git+https://github.com/<username>/react-app.git",
   },
   "scripts": {
     "build": "react-app build",
