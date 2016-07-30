@@ -20,7 +20,7 @@ function install(...args) {
       if (code === 0) {
         resolve();
       } else {
-        reject(new Error('Failed to install \'react-app-tools\' npm packages.'));
+        reject(new Error('Failed to install npm package(s).'));
       }
     });
   });
