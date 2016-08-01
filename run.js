@@ -7,6 +7,8 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+/* eslint-disable no-console, global-require */
+
 const fs = require('fs');
 const path = require('path');
 
@@ -30,7 +32,11 @@ const findScript = (() => {
       try {
         files.push(...fs.readdirSync(path.join(process.cwd(), 'scripts'))
           .map(file => path.join(process.cwd(), 'scripts', file)));
-      } catch (err) { }
+      } catch (err) {
+        if (process.env.VERBOSE) {
+          console.log(`INFO: No scripts found in ${path.join(process.cwd(), 'scripts')}`);
+        }
+      }
       try {
         files.push(...fs.readdirSync(path.join(__dirname, 'scripts'))
           .map(file => path.join(path.join(__dirname, 'scripts', file))));

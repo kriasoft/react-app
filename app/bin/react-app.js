@@ -1,9 +1,9 @@
 #!/usr/bin/env node
 
+var fs = require('fs');
 var path = require('path');
 
 if (process.argv[2] === '-v' || process.argv[2] === '--version') {
-  var fs = require('fs');
   var filename = require.resolve('../package.json');
   var pkg = JSON.parse(fs.readFileSync(filename, 'utf8'));
   console.log('v' + pkg.version);
@@ -15,25 +15,38 @@ if (process.versions.node.split('.')[0] < 6) {
   process.exit(1);
 }
 
-process.env.TEST = false;
+process.env.TEST_SDK = false;
 
 for (var i = 0; i < process.argv.length; i++) {
-  if (process.argv[i] === '-t') process.env.TEST = true;
+  if (process.argv[i] === '--test-sdk') {
+    process.env.TEST_SDK = true;
+    var tempDir = path.resolve(__dirname, '../../temp');
+
+    if (!fs.existsSync(tempDir)) {
+      fs.mkdirSync(tempDir);
+    }
+
+    process.chdir(tempDir);
+  }
 }
 
 function run(command) {
-  if (process.env.TEST) {
+  if (process.env.TEST_SDK) {
+    // eslint-disable-next-line global-require
     return require(path.resolve(__dirname, '../../run'))(command);
-  } else {
-    return require('react-app-tools/run')(command);
   }
+
+  // eslint-disable-next-line global-require, import/no-unresolved
+  return require('react-app-tools/run')(command);
 }
 
 switch (process.argv[2] /* command to run */) {
   case 'new':
-    if (process.env.TEST) {
+    if (process.env.TEST_SDK) {
+      // eslint-disable-next-line global-require
       require(path.resolve(__dirname, '../../scripts/new'))();
     } else {
+      // eslint-disable-next-line global-require, import/no-unresolved
       require('react-app-tools/scripts/new')();
     }
     break;

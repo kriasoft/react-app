@@ -53,7 +53,7 @@ $ react-app run
 
 The app should become available at [http://localhost:3000](http://localhost:3000)
 
-For more information visit https://github.com/kriasoft/react-app/tree/master/template
+For more information visit [`/templates/app`](https://github.com/kriasoft/react-app/tree/master/templates/app)
 
 
 ### How to Customize

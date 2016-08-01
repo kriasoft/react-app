@@ -142,12 +142,13 @@ Adhering to the following process is the best way to get your work included in t
 ## Testing
 
 ```bash
-$ npm install
-$ mkdir test
-$ cd test
-$ node ../app/bin/react-app new -t
-$ node ../app/bin/react-app build
-$ node ../app/bin/react-app run
+npm install             # Install all the required dependencies
+
+npm run new             # Scaffold a new JavaScript project inside the /temp folder
+npm run build           # Compile the test project
+npm run start           # Compile the test project in watch mode and launche a dev server
+
+npm run lint            # Lint the source code with ESLint
 ```
 
 **IMPORTANT**: By submitting a patch, you agree to allow the project owners to license your work
