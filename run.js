@@ -33,7 +33,7 @@ const findScript = (() => {
         files.push(...fs.readdirSync(path.join(process.cwd(), 'scripts'))
           .map(file => path.join(process.cwd(), 'scripts', file)));
       } catch (err) {
-        if (process.env.VERBOSE) {
+        if (process.env.VERBOSE === 'true') {
           console.log(`INFO: No scripts found in ${path.join(process.cwd(), 'scripts')}`);
         }
       }

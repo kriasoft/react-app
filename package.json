@@ -1,6 +1,6 @@
 {
   "name": "react-app-tools",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Boilerplate and tooling for JavaScript application development with React",
   "repository": "kriasoft/react-app",
   "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
@@ -31,6 +31,7 @@
   },
   "files": [
     "scripts",
+    "templates",
     "run.js",
     "webpack.config.js"
   ],
@@ -86,6 +87,9 @@
     "webpack-dev-middleware": "^1.6.1",
     "webpack-hot-middleware": "^2.12.2"
   },
+  "optionalDependencies": {
+    "react-app": "^1.1.2"
+  },
   "devDependencies": {
     "history": "^3.0.0",
     "react": "^15.3.0",
@@ -114,7 +118,7 @@
     }
   },
   "scripts": {
-    "lint": "eslint app/bin scripts templates/app run.js webpack.config.js",
+    "lint": "eslint app/bin app/cli.js scripts templates/app run.js webpack.config.js",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --reporter min --watch",
     "new": "node ./app/bin/react-app new --test-sdk",

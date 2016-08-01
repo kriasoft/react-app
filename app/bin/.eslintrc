@@ -1,14 +1,8 @@
 {
-  "env": {
-    "es6": false
-  },
   "rules": {
-    "block-scoped-var": 0,
+    "global-require": 0,
     "no-console": 0,
-    "no-unused-expressions": 0,
     "no-var": 0,
-    "padded-blocks": 0,
-    "prefer-template": 0,
-    "vars-on-top": 0
+    "prefer-template": 0
   }
 }

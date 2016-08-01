@@ -9,7 +9,6 @@
 
 const fs = require('fs');
 const path = require('path');
-const readline = require('readline');
 const { spawn } = require('child_process');
 
 function install(...args) {
@@ -50,41 +49,7 @@ function copy(src, dest) {
   });
 }
 
-module.exports = () => new Promise(resolve => {
-  console.log(`Scaffolding a new project in ${process.cwd()}`);
-
-  // Check if the current directory is empty
-  const files = fs.readdirSync(process.cwd());
-  if (files.filter(x => x !== '.git').length) {
-    console.log('The current directory is not empty.');
-    const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
-    process.stdout.write('Are you sure you want to proceed? (y/N)? ');
-    process.stdin.once('keypress', key => {
-      console.log();
-      rl.close();
-      if (key === 'y' || key === 'Y') {
-        resolve();
-      } else {
-        process.exit(0);
-      }
-    });
-  } else {
-    resolve();
-  }
-})
-  .then(() => {
-    // Create an empty package.json file
-    fs.writeFileSync(path.resolve(process.cwd(), 'package.json'), '{}', 'utf8');
-
-    if (process.env.TEST_SDK) {
-      return Promise.resolve();
-    }
-
-    // Install 'react-app-tools` npm module
-    console.log('Installing \'react-app-tools\' from npm... This may take a couple minutes.');
-    console.log();
-    return install('react-app-tools', '--save-dev');
-  })
+module.exports = () => Promise.resolve()
   .then(() => copy(path.resolve(__dirname, '../templates/app'), process.cwd()))
   .then(() => install('--production'))
   .then(() => {
