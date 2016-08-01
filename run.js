@@ -11,9 +11,10 @@
 
 const fs = require('fs');
 const path = require('path');
+const chalk = require('chalk');
 
 /**
- * Find a script by its name. Given the following list of files:
+ * Find an automation script by its name. Given the following list of files:
  *
  *   ./node_modules/react-app-tools/scripts/build.js
  *   ./node_modules/react-app-tools/scripts/start.js
@@ -49,6 +50,29 @@ const findScript = (() => {
 })();
 
 
+const findConfig = (() => {
+  let config;
+  return () => {
+    if (config) return config;
+
+    try {
+      config = require(path.resolve(process.cwd(), './config.js'));
+    } catch (err) {
+      config = {};
+    }
+
+    const webpackConfig = require('./webpack.config');
+
+    if (typeof config.webpack === 'function') {
+      config.webpack = config.webpack(webpackConfig) || webpackConfig;
+    } else {
+      config.webpack = webpackConfig;
+    }
+
+    return config;
+  };
+})();
+
 /**
  * Find and execute a script. For example: run('clean').then(() => console.log('Done!');
  *
@@ -58,14 +82,21 @@ const findScript = (() => {
  */
 function run(command) {
   const script = findScript(command);
+  const config = findConfig();
+
   if (!script) {
     console.error(`ERROR: File not found: scripts/${command}.js`);
     process.exit(1);
   }
+
   const start = new Date();
-  console.log(`Starting '${command}'...`);
-  return Promise.resolve().then(() => require(script)()).then(() => {
-    console.log(`Finished '${command}' after ${new Date().getTime() - start.getTime()}ms`);
+  console.log(`Starting '${chalk.bold.gray(command)}'...`);
+
+  return Promise.resolve().then(() => require(script)(config)).then(() => {
+    console.log(
+      `Finished '${chalk.bold.gray(command)}' after ` +
+      `${chalk.bold(new Date().getTime() - start.getTime())}ms`
+    );
   }, err => console.error(err.stack));
 }
 

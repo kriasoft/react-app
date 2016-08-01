@@ -95,50 +95,81 @@ function run(command) {
   )(command);
 }
 
-switch (process.argv[2] /* command to run */) {
-  case 'new':
-    Promise.resolve()
-      .then(() => checkIfCurrentWorkingDirectoryIsEmpty())
-      .then(() => installReactTools())
-      .then(() => (process.env.TEST_SDK === 'true'
-          // eslint-disable-next-line global-require
-          ? require(path.resolve(__dirname, '../scripts/new'))()
-          // eslint-disable-next-line global-require, import/no-unresolved
-          : require(path.resolve(process.cwd(), './node_modules/react-app-tools/scripts/new'))())
-      )
-      .catch(err => {
-        console.error(err.stack);
-        process.exit(1);
-      });
-    break;
-  case 'build':
-    run('build');
-    break;
-  case 'run':
-  case 'start':
-    run('start');
-    break;
-  default:
-    console.log('  ____                 _        _                  ____  ____  _  __');
-    console.log(' |  _ \\ ___  __ _  ___| |_     / \\   _ __  _ __   / ___||  _ \\| |/ /');
-    console.log(' | |_) / _ \\/ _` |/ __| __|   / _ \\ | \'_ \\| \'_ \\  \\___ \\| | | | \' /');
-    console.log(' |  _ <  __/ (_| | (__| |_   / ___ \\| |_) | |_) |  ___) | |_| | . \\');
-    console.log(' |_| \\_\\___|\\__,_|\\___|\\__| /_/   \\_\\ .__/| .__/  |____/|____/|_|\\_\\');
-    console.log('                                    |_|   |_|');
-    console.log();
-    console.log(' Usage: react-app <command> [options]');
-    console.log();
-    console.log(' Commands:');
-    console.log();
-    console.log('   new     - Scaffold a new JavaScript application project');
-    console.log('   build   - Compile JavaScript application with Webpack');
-    console.log('   run     - Compile and launch the app');
-    console.log();
-    console.log(' Options:');
-    console.log();
-    console.log('   -v, --version   - Print React App SDK version');
-    console.log();
-    console.log(' For more information visit:');
-    console.log();
-    console.log('   https://github.com/kriasoft/react-app');
+const command = process.argv[2];
+
+if (process.argv.includes('--production') || process.argv.includes('--prod')) {
+  process.env.APP_ENV = 'production';
+} else if (process.argv.includes('--staging')) {
+  process.env.APP_ENV = 'staging';
+} else if (process.argv.includes('--test')) {
+  process.env.APP_ENV = 'test';
+} else {
+  console.log('command:', command);
+  process.env.APP_ENV = (command === 'new' || command === 'start') ? 'development' : 'production';
+}
+
+if (command === 'start' || command === 'run') {
+  process.env.HMR = !process.argv.includes('--no-hmr');
+  if (process.argv.includes('--release') || process.argv.includes('-r')) {
+    process.env.NODE_ENV = 'production';
+  } else {
+    process.env.NODE_ENV = 'development';
+  }
+} else {
+  process.env.HMR = process.argv.includes('--hmr');
+  if (process.argv.includes('--debug') || process.argv.includes('-d')) {
+    process.env.NODE_ENV = 'development';
+  } else {
+    process.env.NODE_ENV = 'production';
+  }
+}
+
+if (command === 'new') {
+  Promise.resolve()
+    .then(() => checkIfCurrentWorkingDirectoryIsEmpty())
+    .then(() => installReactTools())
+    .then(() => (process.env.TEST_SDK === 'true'
+      // eslint-disable-next-line global-require
+      ? require(path.resolve(__dirname, '../scripts/new'))()
+      // eslint-disable-next-line global-require, import/no-unresolved
+      : require(path.resolve(process.cwd(), './node_modules/react-app-tools/scripts/new'))())
+    )
+    .catch(err => {
+      console.error(process.argv.includes('--verbose') ? err.stack : `ERROR: ${err.message}`);
+      process.exit(1);
+    });
+} else if (/^[a-z0-9:\-.]+$/.test(command || '')) {
+  console.log(
+    `Environment: ${process.env.APP_ENV}, ` +
+    `debug mode: ${process.env.NODE_ENV === 'development' ? 'true' : 'false'}, ` +
+    `HMR: ${process.env.HMR === 'true' ? 'true' : 'false'}`
+  );
+  run(command)
+    .catch(err => {
+      console.error(process.argv.includes('--verbose') ? err.stack : `ERROR: ${err.message}`);
+      process.exit(1);
+    });
+} else {
+  console.log('  ____                 _        _                  ____  ____  _  __');
+  console.log(' |  _ \\ ___  __ _  ___| |_     / \\   _ __  _ __   / ___||  _ \\| |/ /');
+  console.log(' | |_) / _ \\/ _` |/ __| __|   / _ \\ | \'_ \\| \'_ \\  \\___ \\| | | | \' /');
+  console.log(' |  _ <  __/ (_| | (__| |_   / ___ \\| |_) | |_) |  ___) | |_| | . \\');
+  console.log(' |_| \\_\\___|\\__,_|\\___|\\__| /_/   \\_\\ .__/| .__/  |____/|____/|_|\\_\\');
+  console.log('                                    |_|   |_|');
+  console.log();
+  console.log(' Usage: react-app <command> [options]');
+  console.log();
+  console.log(' Commands:');
+  console.log();
+  console.log('   new     - Scaffold a new JavaScript application project');
+  console.log('   build   - Compile JavaScript application with Webpack');
+  console.log('   run     - Compile and launch the app');
+  console.log();
+  console.log(' Options:');
+  console.log();
+  console.log('   -v, --version   - Print React App SDK version');
+  console.log();
+  console.log(' For more information visit:');
+  console.log();
+  console.log('   https://github.com/kriasoft/react-app');
 }

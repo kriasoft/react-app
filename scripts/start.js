@@ -11,25 +11,23 @@ const fs = require('fs');
 const ejs = require('ejs');
 const webpack = require('webpack');
 
-module.exports = () => {
+module.exports = config => {
   let count = 0;
-  global.HMR = !process.argv.includes('--no-hmr'); // Hot Module Replacement (HMR)
   return new Promise(resolve => {
     const bs = require('browser-sync').create();
-    const webpackConfig = require('../webpack.config.js');
-    const compiler = webpack(webpackConfig);
+    const compiler = webpack(config.webpack);
     // Node.js middleware that compiles application in watch mode with HMR support
     // http://webpack.github.io/docs/webpack-dev-middleware.html
     const webpackDevMiddleware = require('webpack-dev-middleware')(compiler, {
-      publicPath: webpackConfig.output.publicPath,
-      stats: webpackConfig.stats,
+      publicPath: config.webpack.output.publicPath,
+      stats: config.webpack.stats,
     });
     compiler.plugin('done', stats => {
       // Generate index.html page
       const bundle = stats.compilation.chunks.find(x => x.name === 'main').files[0];
       const template = fs.readFileSync('./index.ejs', 'utf8');
       const render = ejs.compile(template, { filename: './index.ejs' });
-      const output = render({ debug: true, bundle: `/dist/${bundle}`, config: webpackConfig });
+      const output = render({ debug: true, bundle: `/dist/${bundle}`, config: config.webpack });
       fs.writeFileSync('./public/index.html', output, 'utf8');
 
       // Launch Browsersync after the initial bundling is complete

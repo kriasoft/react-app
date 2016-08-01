@@ -14,12 +14,13 @@ const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
 const pkg = require(path.resolve(process.cwd(), './package.json'));
 
-const isDebug = global.DEBUG === false ? false : !process.argv.includes('--release');
-const isVerbose = process.argv.includes('--verbose') || process.argv.includes('-v');
-const useHMR = !!global.HMR; // Hot Module Replacement (HMR)
+const debug = process.env.NODE_ENV === 'development';
+const verbose = process.env.VERBOSE === 'true';
+const hmr = process.env.HMR === 'true';
+
 const babelConfig = Object.assign({}, pkg.babel, {
   babelrc: false,
-  cacheDirectory: useHMR,
+  cacheDirectory: hmr,
 });
 
 // Webpack configuration (main.js => public/dist/main.{hash}.js)
@@ -39,37 +40,37 @@ const config = {
   output: {
     path: path.resolve(process.cwd(), './public/dist'),
     publicPath: '/dist/',
-    filename: isDebug ? '[name].js?[hash]' : '[name].[hash].js',
-    chunkFilename: isDebug ? '[id].js?[chunkhash]' : '[id].[chunkhash].js',
+    filename: debug ? '[name].js?[hash]' : '[name].[hash].js',
+    chunkFilename: debug ? '[id].js?[chunkhash]' : '[id].[chunkhash].js',
     sourcePrefix: '  ',
   },
 
   // Switch loaders to debug or release mode
-  debug: isDebug,
+  debug,
 
   // Developer tool to enhance debugging, source maps
   // http://webpack.github.io/docs/configuration.html#devtool
-  devtool: isDebug ? 'source-map' : false,
+  devtool: debug ? 'source-map' : false,
 
   // What information should be printed to the console
   stats: {
     colors: true,
-    reasons: isDebug,
-    hash: isVerbose,
-    version: isVerbose,
+    reasons: debug,
+    hash: verbose,
+    version: verbose,
     timings: true,
-    chunks: isVerbose,
-    chunkModules: isVerbose,
-    cached: isVerbose,
-    cachedAssets: isVerbose,
+    chunks: verbose,
+    chunkModules: verbose,
+    cached: verbose,
+    cachedAssets: verbose,
   },
 
   // The list of plugins for Webpack compiler
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(),
     new webpack.DefinePlugin({
-      'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
-      __DEV__: isDebug,
+      'process.env.NODE_ENV': debug ? '"development"' : '"production"',
+      __DEV__: debug,
     }),
     // Emit a JSON file with assets paths
     // https://github.com/sporto/assets-webpack-plugin#options
@@ -100,12 +101,12 @@ const config = {
         loaders: [
           'style-loader',
           `css-loader?${JSON.stringify({
-            sourceMap: isDebug,
+            sourceMap: debug,
             // CSS Modules https://github.com/css-modules/css-modules
             modules: true,
-            localIdentName: isDebug ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]',
+            localIdentName: debug ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:4]',
             // CSS Nano http://cssnano.co/options/
-            minimize: !isDebug,
+            minimize: !debug,
           })}`,
           'postcss-loader',
         ],
@@ -191,12 +192,12 @@ const config = {
 };
 
 // Optimize the bundle in release (production) mode
-if (!isDebug) {
+if (!debug) {
   config.plugins.push(new webpack.optimize.DedupePlugin());
   config.plugins.push(new webpack.optimize.UglifyJsPlugin({
     compress: {
       screw_ie8: true,
-      warnings: isVerbose,
+      warnings: verbose,
     },
     mangle: {
       screw_ie8: true,
@@ -210,7 +211,7 @@ if (!isDebug) {
 }
 
 // Hot Module Replacement (HMR) + React Hot Reload
-if (isDebug && useHMR) {
+if (hmr) {
   babelConfig.plugins.unshift('react-hot-loader/babel');
   config.entry.unshift('react-hot-loader/patch', 'webpack-hot-middleware/client');
   config.plugins.push(new webpack.HotModuleReplacementPlugin());

@@ -8,14 +8,13 @@
  */
 
 const webpack = require('webpack');
-const webpackConfig = require('../webpack.config.js');
 
-module.exports = () => new Promise((resolve, reject) => {
-  webpack(webpackConfig).run((err, stats) => {
+module.exports = config => new Promise((resolve, reject) => {
+  webpack(config.webpack).run((err, stats) => {
     if (err) {
       reject(err);
     } else {
-      console.log(stats.toString(webpackConfig.stats));
+      console.log(stats.toString(config.webpack.stats));
       resolve();
     }
   });
