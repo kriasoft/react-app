@@ -7,7 +7,7 @@
   "contributors": [
     "Konstantin Tarkus <hello@tarkus.me> (https://tarkus.me)"
   ],
-  "license": "Apache 2.0",
+  "license": "MIT",
   "keywords": [
     "react",
     "reactjs",
