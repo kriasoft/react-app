@@ -12,6 +12,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const AssetsPlugin = require('assets-webpack-plugin');
+
 const pkg = require(path.resolve(process.cwd(), './package.json'));
 
 const debug = process.env.NODE_ENV === 'development';
@@ -133,11 +134,11 @@ const config = {
         loader: path.resolve(process.cwd(), './utils/markdown-loader.js'),
       },
       {
-        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+        test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)(\?.*)$/,
         loader: 'url-loader?limit=10000',
       },
       {
-        test: /\.(eot|ttf|wav|mp3)$/,
+        test: /\.(eot|ttf|wav|mp3)(\?.*)$/,
         loader: 'file-loader',
       },
     ],

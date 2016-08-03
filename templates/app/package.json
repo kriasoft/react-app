@@ -28,7 +28,13 @@
   },
   "eslintConfig": {
     "parser": "babel-eslint",
-    "extends": "airbnb"
+    "extends": "airbnb",
+    "env": {
+      "browser": true
+    },
+    "rules": {
+      "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
+    }
   },
   "scripts": {
     "lint": "eslint actions components core routes test utils main.js",

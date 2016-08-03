@@ -104,8 +104,7 @@ if (process.argv.includes('--production') || process.argv.includes('--prod')) {
 } else if (process.argv.includes('--test')) {
   process.env.APP_ENV = 'test';
 } else {
-  console.log('command:', command);
-  process.env.APP_ENV = (command === 'new' || command === 'start') ? 'development' : 'production';
+  process.env.APP_ENV = (command === 'run' || command === 'start') ? 'development' : 'production';
 }
 
 if (command === 'start' || command === 'run') {
@@ -141,10 +140,11 @@ if (command === 'new') {
 } else if (/^[a-z0-9:\-.]+$/.test(command || '')) {
   console.log(
     `Environment: ${process.env.APP_ENV}, ` +
-    `debug mode: ${process.env.NODE_ENV === 'development' ? 'true' : 'false'}, ` +
+    `build: ${process.env.NODE_ENV === 'development'
+      ? 'debug (non-optimized)' : 'release (optimized)'}, ` +
     `HMR: ${process.env.HMR === 'true' ? 'true' : 'false'}`
   );
-  run(command)
+  run(command === 'start' ? 'run' : command)
     .catch(err => {
       console.error(process.argv.includes('--verbose') ? err.stack : `ERROR: ${err.message}`);
       process.exit(1);
@@ -167,7 +167,17 @@ if (command === 'new') {
   console.log();
   console.log(' Options:');
   console.log();
-  console.log('   -v, --version   - Print React App SDK version');
+  console.log('   --production, or  - Execution environment');
+  console.log('   --development, or');
+  console.log('   --staging, or');
+  console.log('   --test');
+  console.log();
+  console.log('   --release, or     - Build configuration (optimized/minimized vs not-optimized)');
+  console.log('   --debug');
+  console.log();
+  console.log('   --no-hmr          - Disable Hot Module Replacement (HMR)');
+  console.log('   --verbose         - Print more information to the console');
+  console.log('   -v, --version     - Print React App SDK version');
   console.log();
   console.log(' For more information visit:');
   console.log();

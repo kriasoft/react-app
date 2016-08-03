@@ -9,10 +9,6 @@
 
 const toRegExp = require('path-to-regexp');
 
-function escape(text) {
-  return text.replace('\'', '\\\'').replace('\\', '\\\\');
-}
-
 /**
  * Converts application routes from JSON to JavaScript. For example, a route like
  *
@@ -41,24 +37,22 @@ module.exports = function routesLoader(source) {
     const keys = [];
     const pattern = toRegExp(route.path, keys);
     const require = route.chunk && route.chunk === 'main' ?
-      module => `Promise.resolve(require('${escape(module)}').default)` :
+      module => `Promise.resolve(require(${JSON.stringify(module)}).default)` :
       module => `new Promise(function (resolve, reject) {
         try {
-          require.ensure(['${escape(module)}'], function (require) {
-            resolve(require('${escape(module)}').default);
-          }${typeof route.chunk === 'string' ? `, '${escape(route.chunk)}'` : ''});
+          require.ensure([${JSON.stringify(module)}], function (require) {
+            resolve(require(${JSON.stringify(module)}).default);
+          }${typeof route.chunk === 'string' ? `, ${JSON.stringify(route.chunk)}` : ''});
         } catch (err) {
           reject(err);
         }
       })`;
     output.push('  {\n');
-    output.push(`    path: '${escape(route.path)}',\n`);
+    for (const key of Object.keys(route)) {
+      output.push(`    ${key}: ${JSON.stringify(route[key])},\n`);
+    }
     output.push(`    pattern: ${pattern.toString()},\n`);
     output.push(`    keys: ${JSON.stringify(keys)},\n`);
-    output.push(`    component: '${escape(route.component)}',\n`);
-    if (route.data) {
-      output.push(`    data: ${JSON.stringify(route.data)},\n`);
-    }
     output.push(`    load() {\n      return ${require(route.component)};\n    },\n`);
     output.push('  },\n');
   }

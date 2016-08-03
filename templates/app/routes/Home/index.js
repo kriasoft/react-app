@@ -7,4 +7,6 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-export default from './Home';
+import Home from './Home';
+
+export default Home;

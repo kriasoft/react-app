@@ -15,6 +15,7 @@ module.exports = config => {
   let count = 0;
   return new Promise(resolve => {
     const bs = require('browser-sync').create();
+
     const compiler = webpack(config.webpack);
     // Node.js middleware that compiles application in watch mode with HMR support
     // http://webpack.github.io/docs/webpack-dev-middleware.html
@@ -22,6 +23,7 @@ module.exports = config => {
       publicPath: config.webpack.output.publicPath,
       stats: config.webpack.stats,
     });
+
     compiler.plugin('done', stats => {
       // Generate index.html page
       const bundle = stats.compilation.chunks.find(x => x.name === 'main').files[0];

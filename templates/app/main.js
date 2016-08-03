@@ -16,7 +16,8 @@ import store from './core/store';
 import router from './core/router';
 import history from './core/history';
 
-let routes = require('./routes.json'); // Loaded with utils/routes-loader.js
+let routes = require('./routes.json'); // Parsed by using `utils/routes-loader.js`
+
 const container = document.getElementById('root');
 
 function renderComponent(component) {
@@ -39,7 +40,8 @@ render(history.getCurrentLocation());
 // Enable Hot Module Replacement (HMR)
 if (module.hot) {
   module.hot.accept('./routes.json', () => {
-    routes = require('./routes.json'); // eslint-disable-line global-require
+    // eslint-disable-next-line global-require, import/newline-after-import
+    routes = require('./routes.json');
     render(history.getCurrentLocation());
   });
 }

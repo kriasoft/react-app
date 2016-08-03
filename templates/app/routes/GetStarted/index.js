@@ -7,4 +7,6 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
-export default from './GetStarted';
+import GetStarted from './GetStarted';
+
+export default GetStarted;
