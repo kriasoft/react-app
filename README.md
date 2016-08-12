@@ -1,6 +1,6 @@
 # React App SDK &nbsp; <a href="https://github.com/kriasoft/react-app/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-app.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&label=Follow&maxAge=3600" height="20"></a>
 
-**CLI tools and templates** for authoring **[React](https://facebook.github.io/react/)** applications with a single dev dependency and zero build/run configuration. 
+**CLI tool and templates** for authoring **[React](https://facebook.github.io/react/)** applications with a single dev dependency and zero build/run configuration. 
 
 
 ### TL;DR
