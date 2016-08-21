@@ -29,7 +29,7 @@ class HomePage extends React.Component {
       <Layout className={s.content}>
         <h1>Welcome!</h1>
         <p>
-          This website is built with <a href="https://github.com/kriasoft/react-app">React App
+          This website is build with <a href="https://github.com/kriasoft/react-app">React App
           SDK</a> — CLI tools and templates for authoring React/Redux apps with just a single dev
           dependency and zero configuration. It is powered by popular front-end dev tools such
           as <a href="http://babeljs.io/">Babel</a>

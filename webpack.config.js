@@ -1,17 +1,7 @@
-/**
- * React App SDK (https://github.com/kriasoft/react-app)
- *
- * Copyright © 2015-present Kriasoft, LLC. All rights reserved.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE.txt file in the root directory of this source tree.
- */
-
 /* eslint-disable global-require */
 
 const path = require('path');
 const webpack = require('webpack');
-const AssetsPlugin = require('assets-webpack-plugin');
 
 const pkg = require(path.resolve(process.cwd(), './package.json'));
 
@@ -34,16 +24,15 @@ const config = {
   // The entry point for the bundle
   entry: [
     /* The main entry point of your JavaScript application */
-    './main.js',
+    './app.js',
   ],
 
   // Options affecting the output of the compilation
   output: {
-    path: path.resolve(process.cwd(), './public/dist'),
-    publicPath: '/dist/',
-    filename: debug ? '[name].js?[hash]' : '[name].[hash].js',
-    chunkFilename: debug ? '[id].js?[chunkhash]' : '[id].[chunkhash].js',
-    sourcePrefix: '  ',
+    path: path.resolve(process.cwd(), './dist/'),
+    publicPath: 'http://localhost:3000/dist/',
+    filename: '[name].js',
+    chunkFilename: '[id].js',
   },
 
   // Switch loaders to debug or release mode
@@ -73,14 +62,14 @@ const config = {
       'process.env.NODE_ENV': debug ? '"development"' : '"production"',
       __DEV__: debug,
     }),
-    // Emit a JSON file with assets paths
-    // https://github.com/sporto/assets-webpack-plugin#options
-    new AssetsPlugin({
-      path: path.resolve(process.cwd(), './public/dist'),
-      filename: 'assets.json',
-      prettyPrint: true,
-    }),
   ],
+
+  target: 'electron-renderer',
+
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
 
   // Options affecting the normal modules
   module: {
@@ -93,7 +82,7 @@ const config = {
           path.resolve(process.cwd(), './core'),
           path.resolve(process.cwd(), './pages'),
           path.resolve(process.cwd(), './routes'),
-          path.resolve(process.cwd(), './main.js'),
+          path.resolve(process.cwd(), './app.js'),
         ],
         loader: `babel-loader?${JSON.stringify(babelConfig)}`,
       },
@@ -211,13 +200,15 @@ if (!debug) {
       screw_ie8: true,
     },
   }));
-  config.plugins.push(new webpack.optimize.AggressiveMergingPlugin());
 }
 
 // Hot Module Replacement (HMR) + React Hot Reload
 if (hmr) {
   babelConfig.plugins.unshift('react-hot-loader/babel');
-  config.entry.unshift('react-hot-loader/patch', 'webpack-hot-middleware/client');
+  config.entry.unshift(
+    'react-hot-loader/patch',
+    'webpack-hot-middleware/client?path=http://localhost:3000/__webpack_hmr'
+  );
   config.plugins.push(new webpack.HotModuleReplacementPlugin());
   config.plugins.push(new webpack.NoErrorsPlugin());
 }
