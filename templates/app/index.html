@@ -4,14 +4,14 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:100,300,400">
-    <title>React App Starter Kit</title>
+    <title>Electron React App Starter Kit</title>
   </head>
   <body>
     <div id="root"></div>
     <script>
       {
         const script = document.createElement('script');
-        script.src = (process.env.HMR) ? `http://localhost:3000/dist/main.js` : './dist/main.js';
+        script.src = (process.env.HMR) ? `http://localhost:3000/app/main.js` : './app/dist/main.js';
         document.write(script.outerHTML);
       }
     </script>

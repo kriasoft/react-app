@@ -23,14 +23,13 @@ const config = {
 
   // The entry point for the bundle
   entry: [
-    /* The main entry point of your JavaScript application */
-    './app.js',
+    './src/app.js',
   ],
 
   // Options affecting the output of the compilation
   output: {
-    path: path.resolve(process.cwd(), './dist/'),
-    publicPath: 'http://localhost:3000/dist/',
+    path: path.resolve(process.cwd(), './app/dist/'),
+    publicPath: 'http://localhost:3000/app/',
     filename: '[name].js',
     chunkFilename: '[id].js',
   },
@@ -77,12 +76,12 @@ const config = {
       {
         test: /\.jsx?$/,
         include: [
-          path.resolve(process.cwd(), './actions'),
-          path.resolve(process.cwd(), './components'),
-          path.resolve(process.cwd(), './core'),
-          path.resolve(process.cwd(), './pages'),
-          path.resolve(process.cwd(), './routes'),
-          path.resolve(process.cwd(), './app.js'),
+          path.resolve(process.cwd(), './src/actions'),
+          path.resolve(process.cwd(), './src/components'),
+          path.resolve(process.cwd(), './src/core'),
+          path.resolve(process.cwd(), './src/pages'),
+          path.resolve(process.cwd(), './src/routes'),
+          path.resolve(process.cwd(), './src/app.js'),
         ],
         loader: `babel-loader?${JSON.stringify(babelConfig)}`,
       },

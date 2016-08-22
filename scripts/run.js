@@ -38,7 +38,7 @@ function formatMessage(message) {
 }
 
 function openElectronApp() {
-  const child = spawn('electron', ['./electron.main', '--enable-logs']);
+  const child = spawn('electron', ['./app/electron.main.js', '--enable-logs']);
   const prefix = 'electron> ';
   child.stdout.on('data', (data) => {
     console.log(chalk.blue(
@@ -124,11 +124,12 @@ module.exports = config => (
       }
     });
 
-    var express = require('express');
-    var devMiddleware = require('webpack-dev-middleware');
-    var hotMiddleware = require('webpack-hot-middleware');
+    // Start dev server with webpack dev and hot middleware
+    const express = require('express');
+    const devMiddleware = require('webpack-dev-middleware');
+    const hotMiddleware = require('webpack-hot-middleware');
 
-    var app = express();
+    const app = express();
 
     app.use(devMiddleware(compiler, {
       publicPath: config.webpack.output.publicPath,
@@ -142,23 +143,11 @@ module.exports = config => (
         console.error(err);
       }
 
-      console.log('Listening at http://localhost:3000/');
+      console.log(chalk.cyan(
+        'Development server listening at http://localhost:3000/'
+      ));
+
       resolve();
     });
-
-    // new WebpackDevServer(compiler, {
-    //   historyApiFallback: true,
-    //   hot: true,
-    //   publicPath: config.webpack.output.publicPath,
-    //   stats: config.webpack.stats,
-    // }).listen(3000, (err) => {
-    //   if (err) {
-    //     console.log(err);
-    //   }
-    //
-    //   console.log(chalk.cyan('Starting the development server...'));
-    //   console.log();
-    //   resolve();
-    // });
   })
 );

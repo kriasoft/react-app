@@ -10,4 +10,4 @@
 const del = require('del');
 
 module.exports = () =>
-  del(['public/dist/*', '!public/dist/.git'], { dot: true });
+  del(['app/dist/*'], { dot: true });
