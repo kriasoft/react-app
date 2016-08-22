@@ -7,7 +7,7 @@
  * LICENSE.txt file in the root directory of this source tree.
  */
 
+import { useRouterHistory } from 'react-router';
 import createHashHistory from 'history/lib/createHashHistory';
-import useQueries from 'history/lib/useQueries';
 
-export default useQueries(createHashHistory)();
+export default useRouterHistory(createHashHistory)();

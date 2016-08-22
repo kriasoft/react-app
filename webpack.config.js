@@ -23,7 +23,7 @@ const config = {
 
   // The entry point for the bundle
   entry: [
-    './src/app.js',
+    './src/index.js',
   ],
 
   // Options affecting the output of the compilation
@@ -81,7 +81,8 @@ const config = {
           path.resolve(process.cwd(), './src/core'),
           path.resolve(process.cwd(), './src/pages'),
           path.resolve(process.cwd(), './src/routes'),
-          path.resolve(process.cwd(), './src/app.js'),
+          path.resolve(process.cwd(), './src/App.js'),
+          path.resolve(process.cwd(), './src/index.js'),
         ],
         loader: `babel-loader?${JSON.stringify(babelConfig)}`,
       },
@@ -108,18 +109,8 @@ const config = {
         loader: 'json-loader',
       },
       {
-        test: /\.json$/,
-        include: [
-          path.resolve(process.cwd(), './routes.json'),
-        ],
-        loaders: [
-          `babel-loader?${JSON.stringify(babelConfig)}`,
-          path.resolve(process.cwd(), './utils/routes-loader.js'),
-        ],
-      },
-      {
         test: /\.md$/,
-        loader: path.resolve(process.cwd(), './utils/markdown-loader.js'),
+        loader: path.resolve(process.cwd(), './src/utils/markdown-loader.js'),
       },
       {
         test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)(\?.*)$/,

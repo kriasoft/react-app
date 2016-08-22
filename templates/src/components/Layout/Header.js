@@ -8,8 +8,8 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router';
 import Navigation from './Navigation';
-import Link from '../Link';
 import s from './Header.css';
 
 function Header() {

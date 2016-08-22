@@ -8,9 +8,9 @@
  */
 
 import React from 'react';
+import { Link } from 'react-router';
 import history from '../../core/history';
 import '../../components/Layout/Layout.css';
-import Link from '../../components/Link';
 import s from './Error.css';
 
 class ErrorPage extends React.Component {
