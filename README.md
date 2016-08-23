@@ -14,7 +14,7 @@ $ react-app run
 **See** [demo](https://rsb.kriasoft.com), [docs](https://github.com/kriasoft/react-static-boilerplate/tree/master/docs)
 &nbsp;|&nbsp; **Join** [#react-app](https://gitter.im/kriasoft/react-app) chat on Gitter to stay up to date
 &nbsp;|&nbsp; **Follow us** on [Twitter](https://twitter.com/ReactSDK)
-&nbsp;|&nbsp; **Send feedback** to [@koistya](https://twitter.com/koistya)
+&nbsp;|&nbsp; **Learn** [React.js and ES6](#learn-reactjs-and-es6)
 
 <img src="https://koistya.github.io/files/react-app-starter-kit.png" width="100%">
 
@@ -84,6 +84,15 @@ instead of of the original `react-app-tools` npm module. For example (`package.j
   }
 }
 ```
+
+
+### Learn React.js and ES6
+
+:mortar_board: &nbsp; **[React.js Training Program](http://www.reactjsprogram.com/?asdf=36750_q0pu0tfa)** by Tyler McGinnis<br>
+:mortar_board: &nbsp; **[React for Beginners](https://reactforbeginners.com/friend/konstantin)** and **[ES6 Training Course](https://es6.io/friend/konstantin)** by Wes Bos<br>
+:green_book: &nbsp; **[React: Up & Running: Building Web Applications](http://amzn.to/2bzweBe)** by Stoyan Stefanov (Aug, 2016)<br>
+:green_book: &nbsp; **[Getting Started with React](http://amzn.to/2bDmSmG)** by Doel Sengupta and Manu Singhal (Apr, 2016)<br>
+:green_book: &nbsp; **[You Don't Know JS: ES6 & Beyond](http://amzn.to/2bKpb4I)** by Kyle Simpson (Dec, 2015)<br>
 
 
 ### Contribute
