@@ -50,12 +50,12 @@ function copy(src, dest) {
 }
 
 module.exports = () => Promise.resolve()
-  .then(() => copy(path.resolve(__dirname, '../templates/app'), process.cwd()))
+  .then(() => copy(path.resolve(__dirname, '../templates'), process.cwd()))
   .then(() => install('--production'))
   .then(() => {
     console.log();
-    console.log('All done! Now you can launch your app by running: npm start');
+    console.log('All done! Now you can launch your electron app by running: npm start');
     console.log();
-    console.log('For more information visit https://github.com/kriasoft/react-app');
+    console.log('For more information visit https://github.com/thangngoc/electron-react-app');
     console.log();
   });

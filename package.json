@@ -8,23 +8,6 @@
     "Konstantin Tarkus <hello@tarkus.me> (https://tarkus.me)"
   ],
   "license": "MIT",
-  "keywords": [
-    "react",
-    "reactjs",
-    "webpack",
-    "babel",
-    "es6",
-    "es2015",
-    "jsx",
-    "redux",
-    "browsersync",
-    "browser-sync",
-    "template",
-    "templates",
-    "boilerplate",
-    "scarrold",
-    "scaffolding"
-  ],
   "engines": {
     "node": ">=6",
     "npm": ">=3.8"
@@ -54,12 +37,13 @@
     "cpy": "^4.0.1",
     "css-loader": "^0.23.1",
     "del": "^2.2.1",
-    "ejs": "^2.5.1",
+    "detect-port": "^1.0.0",
     "eslint": "^3.2.2",
     "eslint-config-airbnb": "^10.0.0",
     "eslint-plugin-import": "^1.12.0",
     "eslint-plugin-jsx-a11y": "^2.0.1",
     "eslint-plugin-react": "^6.0.0",
+    "express": "^4.14.0",
     "file-loader": "^0.9.0",
     "front-matter": "^2.1.0",
     "highlight.js": "^9.5.0",
@@ -74,8 +58,8 @@
     "postcss-custom-media": "^5.0.1",
     "postcss-custom-properties": "^5.0.1",
     "postcss-custom-selectors": "^3.0.0",
-    "postcss-import": "^8.1.2",
     "postcss-flexbugs-fixes": "^2.0.0",
+    "postcss-import": "^8.1.2",
     "postcss-loader": "^0.9.1",
     "postcss-media-minmax": "^2.1.2",
     "postcss-nesting": "^2.3.1",
@@ -114,7 +98,15 @@
     "parser": "babel-eslint",
     "extends": "airbnb",
     "rules": {
-      "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }]
+      "react/jsx-filename-extension": [
+        1,
+        {
+          "extensions": [
+            ".js",
+            ".jsx"
+          ]
+        }
+      ]
     }
   },
   "stylelint": {
@@ -127,6 +119,7 @@
     "lint": "eslint app scripts templates/app run.js webpack.config.js",
     "test": "mocha --compilers js:babel-register",
     "test:watch": "mocha --compilers js:babel-register --reporter min --watch",
+    "new-setup": "rm -rf temp && ln -s templates temp",
     "new": "node ./app/bin/react-app new --test-sdk",
     "build": "node ./app/bin/react-app build --test-sdk",
     "start": "node ./app/bin/react-app run --test-sdk"

@@ -1,44 +1,14 @@
 {
   "private": true,
-  "engines": {
-    "node": ">=6",
-    "npm": ">=3.8"
-  },
+  "name": "electron-boilerplate",
+  "productName": "Electron Boilerplate",
+  "description": "Starter for your Electron application",
+  "version": "0.0.0",
+  "author": "Mr. Gumby <mr.gumby@example.com>",
+  "copyright": "© 2016, Gumby inc.",
+  "homepage": "http://example.com",
+  "license": "MIT",
+  "main": "background.js",
   "dependencies": {
-    "history": "^3.0.0",
-    "react": "^15.3.0",
-    "react-app": "^1.1.2",
-    "react-dom": "^15.3.0",
-    "react-redux": "^4.4.5",
-    "redux": "^3.5.2",
-    "whatwg-fetch": "^1.0.0"
-  },
-  "devDependencies": {
-    "react-app-tools": "^1.1.2"
-  },
-  "babel": {
-    "presets": [
-      "react",
-      "es2015",
-      "stage-1"
-    ],
-    "plugins": [
-      "transform-runtime"
-    ]
-  },
-  "eslintConfig": {
-    "parser": "babel-eslint",
-    "extends": "airbnb",
-    "env": {
-      "browser": true
-    },
-    "rules": {
-      "react/jsx-filename-extension": [1, { "extensions": [".js"] }]
-    }
-  },
-  "scripts": {
-    "lint": "eslint actions components core routes test utils main.js",
-    "build": "react-app build",
-    "start": "react-app run"
   }
 }
