@@ -1,0 +1,32 @@
+{
+  "name": "react-app",
+  "version": "2.0.0-beta.2",
+  "description": "Create React apps with server-side rendering (SSR) and no build configuration.",
+  "repository": "kriasoft/react-app",
+  "license": "MIT",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react.js",
+    "server rendering",
+    "server-rendering",
+    "server-side rendering",
+    "server side rendering",
+    "pre-render",
+    "prerender",
+    "ssr"
+  ],
+  "engines": {
+    "node": ">=8"
+  },
+  "files": [
+    "index.js"
+  ],
+  "main": "index.js",
+  "dependencies": {
+    "chalk": "^2.3.0"
+  },
+  "peerDependencies": {
+    "react-app-tools": "^2.0.0-beta.2"
+  }
+}

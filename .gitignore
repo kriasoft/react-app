@@ -1,0 +1,4 @@
+.vscode/*
+!.vscode/settings.json
+node_modules
+lerna-debug.log

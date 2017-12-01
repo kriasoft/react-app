@@ -1,0 +1,11 @@
+{
+  "editor.formatOnSave": true,
+  "javascript.format.enable": false,
+  "search.exclude": {
+    "**/.idea": true,
+    "**/node_modules": true,
+    "**/lerna-debug.log": true,
+    "**/yarn-error.log": true,
+    "**/yarn.lock": true
+  }
+}
