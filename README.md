@@ -12,43 +12,43 @@ entry point for the server-side application bundle as demonstrated below:
 #### Directory Layout
 
 ```bash
-    .
-    ├── /build/                     # Compiled output
-    │   ├── /public/                # Pre-compiled client-side app
-    │   └── server.js               # Pre-compiled Node.js app
-    ├── /src/                       # Application source files
-    │   ├── /components/            # React.js components
-    │   │   ├── /App/               #   - The top-level React component
-    │   │   ├── /Button/            #   - Some other UI element
-    │   │   └── ...                 #   - etc.
-    │   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
-    │   ├── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
-    │   └── server.js               # Server-side entiry point, e.g. app.listen(process.env.PORT)
-    └── package.json                # List of project dependencies and NPM scripts
+.
+├── /build/                     # Compiled output
+│   ├── /public/                # Pre-compiled client-side app
+│   └── server.js               # Pre-compiled Node.js app
+├── /src/                       # Application source files
+│   ├── /components/            # React.js components
+│   │   ├── /App/               #   - The top-level React component
+│   │   ├── /Button/            #   - Some other UI element
+│   │   └── ...                 #   - etc.
+│   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
+│   ├── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
+│   └── server.js               # Server-side entiry point, e.g. app.listen(process.env.PORT)
+└── package.json                # List of project dependencies and NPM scripts
 ```
 
 #### `package.json`
 
 ```diff
-    {
-      "dependencies": {
-    +   "express": "^4.6.12",
-        "react": "^16.2.0",
-        "react-dom": "^16.2.0"
-      },
-      {
-    -   "react-scripts": "^1.1.1"
-    +   "react-app-tools": "^2.0.0-beta.3"
-      },
-      "scripts": {
-    -   "test": "react-scripts test --env=jsdom",
-    +   "test": "react-app test --env=jsdom",
-    -   "build": "react-scripts build",
-    +   "build": "react-app build",
-    -   "start": "react-scripts start"
-    +   "start": "react-app start"
-      }
-    }
+{
+  "dependencies": {
++   "express": "^4.6.12",
+    "react": "^16.2.0",
+    "react-dom": "^16.2.0"
+  },
+  {
+-   "react-scripts": "^1.1.1"
++   "react-app-tools": "^2.0.0-beta.3"
+  },
+  "scripts": {
+-   "test": "react-scripts test --env=jsdom",
++   "test": "react-app test --env=jsdom",
+-   "build": "react-scripts build",
++   "build": "react-app build",
+-   "start": "react-scripts start"
++   "start": "react-app start"
+  }
+}
 ```
 
 #### `src/app.browser.js` - Client-side rendering
