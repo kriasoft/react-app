@@ -1,4 +1,5 @@
 bin/react-app.js
 scripts/build.js
 scripts/start.js
+README.md
 WebpackDevServerUtils.js

@@ -45,7 +45,8 @@ copy('react-scripts/scripts/build.js', 'scripts/build.js', [
     "const paths = require('../config/paths');\nconst config = require('react-scripts/config/webpack.config.prod');\nconst configServer = require('../config/webpack.config.server')(config);",
   ],
   ['webpack(config)', 'webpack([config, configServer])'],
-  ['(err, stats)', '(err, { stats: [stats] })'],
+  ['(stats.toJson', '(stats.stats[0].toJson'],
+  [/(resolve\({\n\s+)stats,/, '$1stats: stats.stats[0],'],
   [
     '[paths.appHtml, paths.appIndexJs]',
     '[paths.appHtml, paths.appIndexJs, paths.appEntry, paths.serverEntry]',
@@ -68,15 +69,6 @@ copy('react-scripts/scripts/start.js', 'scripts/start.js', [
   ],
 ]);
 
-const snippet = `
-    delete require.cache[paths.serverBuildAppJs];
-    const code = stats.stats[1].compilation.assets['app.js'].children[0]._value;
-    const m = new Module(paths.serverBuildAppJs, module.parent);
-    m.filename = paths.serverBuildAppJs;
-    m.paths = Module._nodeModulePaths(path.dirname(m.filename));
-    m._compile(code, m.filename);
-`;
-
 copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [
   [/'\.\//g, "'react-dev-utils/"],
   ["require('url');", "require('url');\nconst Module = require('module');"],
@@ -84,5 +76,24 @@ copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [
     "require('react-dev-utils/getProcessForPort');",
     "require('react-dev-utils/getProcessForPort');\nconst paths = require('./config/paths');",
   ],
-  ['  });\n  return compiler;', `${snippet}  });\n  return compiler;`],
+  [
+    '  });\n  return compiler;',
+    `
+    delete require.cache[paths.serverBuildAppJs];
+    const code = stats.stats[1].compilation.assets['app.js'].children[0]._value;
+    const m = new Module(paths.serverBuildAppJs, module.parent);
+    m.filename = paths.serverBuildAppJs;
+    m.paths = Module._nodeModulePaths(path.dirname(m.filename));
+    m._compile(code, m.filename);
+    global.appPromiseResolve(require(m.filename).default);
+  });\n  return compiler;`,
+  ],
+  [
+    'let isFirstCompile = true;',
+    `let isFirstCompile = true;
+
+  global.appPromise = new Promise(resolve => {
+    global.appPromiseResolve = resolve;
+  });`,
+  ],
 ]);

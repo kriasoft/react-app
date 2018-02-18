@@ -1,7 +1,7 @@
 # React App SDK &nbsp; <a href="https://github.com/kriasoft/react-app/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-app.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&label=Follow&maxAge=3600" height="20"></a> <a href="https://t.me/reactapp"><img src="https://img.shields.io/badge/chat-Telegram-green.svg?style=social&maxAge=3600" height="20"></a>
 
 **React App SDK** is an extension to **[Create React App](https://github.com/facebook/create-react-app)**
-that allows building React applications alonside the Node.js backend, be that server-side rendering
+that allows building React applications alongside the Node.js backend, be that server-side rendering
 (SSR), REST or GraphQL APIs, cloud functions, you name it.
 
 It's intended to be used as a drop-off replacement for `react-scripts` NPM module. If you want to
@@ -12,43 +12,43 @@ entry point for the server-side application bundle as demonstrated below:
 #### Directory Layout
 
 ```bash
-.
-├── /build/                     # Compiled output
-│   ├── /public/                # Pre-compiled client-side app
-│   └── server.js               # Pre-compiled Node.js app
-├── /src/                       # Application source files
-│   ├── /components/            # React.js components
-│   │   ├── /App/               #   - The top-level React component
-│   │   ├── /Button/            #   - Some other UI element
-│   │   └── ...                 #   - etc.
-│   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
-│   ├── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
-│   └── server.js               # Server-side entiry point, e.g. app.listen(process.env.PORT)
-└── package.json                # List of project dependencies and NPM scripts
+    .
+    ├── /build/                     # Compiled output
+    │   ├── /public/                # Pre-compiled client-side app
+    │   └── server.js               # Pre-compiled Node.js app
+    ├── /src/                       # Application source files
+    │   ├── /components/            # React.js components
+    │   │   ├── /App/               #   - The top-level React component
+    │   │   ├── /Button/            #   - Some other UI element
+    │   │   └── ...                 #   - etc.
+    │   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
+    │   ├── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
+    │   └── server.js               # Server-side entiry point, e.g. app.listen(process.env.PORT)
+    └── package.json                # List of project dependencies and NPM scripts
 ```
 
 #### `package.json`
 
 ```diff
-{
-  "dependencies": {
-+   "express": "^4.6.12",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  {
--   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.2"
-  },
-  "scripts": {
--   "test": "react-scripts test --env=jsdom",
-+   "test": "react-app test --env=jsdom",
--   "build": "react-scripts build",
-+   "build": "react-app build",
--   "start": "react-scripts start"
-+   "start": "react-app start"
-  }
-}
+    {
+      "dependencies": {
+    +   "express": "^4.6.12",
+        "react": "^16.2.0",
+        "react-dom": "^16.2.0"
+      },
+      {
+    -   "react-scripts": "^1.1.1"
+    +   "react-app-tools": "^2.0.0-beta.3"
+      },
+      "scripts": {
+    -   "test": "react-scripts test --env=jsdom",
+    +   "test": "react-app test --env=jsdom",
+    -   "build": "react-scripts build",
+    +   "build": "react-app build",
+    -   "start": "react-scripts start"
+    +   "start": "react-app start"
+      }
+    }
 ```
 
 #### `src/app.browser.js` - Client-side rendering
