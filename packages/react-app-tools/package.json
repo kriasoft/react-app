@@ -1,6 +1,6 @@
 {
   "name": "react-app-tools",
-  "version": "2.0.0-beta.4",
+  "version": "2.0.0-beta.5",
   "description": "Build and test tooling for front-end application development with Node.js and React.",
   "repository": "kriasoft/react-app",
   "bugs": {
@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "react-scripts": "2.0.0-next.47d2d941",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "write-file-webpack-plugin": "^4.2.0"
   },
   "scripts": {
     "prepublishOnly": "cp ../../README.md . && yarn install && node ./scripts/patch"

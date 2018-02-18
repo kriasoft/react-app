@@ -38,7 +38,7 @@ entry point for the server-side application bundle as demonstrated below:
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.4"
++   "react-app-tools": "^2.0.0-beta.5"
   },
   "scripts": {
 -   "test": "react-scripts test --env=jsdom",

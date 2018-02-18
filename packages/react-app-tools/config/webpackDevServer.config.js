@@ -8,18 +8,30 @@
 'use strict';
 
 const createConfig = require('react-scripts/config/webpackDevServer.config');
+const paths = require('./paths');
 
 module.exports = function(proxy, allowedHost) {
   const config = createConfig(proxy, allowedHost);
   return Object.assign(config, {
     historyApiFallback: false,
-    after(app) {
-      app.get('*', (req, res) => {
+    setup(app) {
+      app.get('/', (req, res, next) => {
         global.appPromise
-          .then(x => {
-            x.handle(req, res);
+          .then(() => {
+            const app = require(paths.serverBuildAppJs).default;
+            app.handle(req, res);
           })
-          .catch(console.error);
+          .catch(next);
+      });
+    },
+    after(app) {
+      app.get('*', (req, res, next) => {
+        global.appPromise
+          .then(() => {
+            const app = require(paths.serverBuildAppJs).default;
+            app.handle(req, res);
+          })
+          .catch(next);
       });
     },
   });

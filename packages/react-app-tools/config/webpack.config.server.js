@@ -12,6 +12,7 @@ const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
+const WriteFilePlugin = require('write-file-webpack-plugin');
 const paths = require('./paths');
 
 module.exports = config =>
@@ -71,15 +72,17 @@ module.exports = config =>
     }),
 
     // Remove plugins that are not needed in the server-side bundle
-    plugins: config.plugins.filter(
-      x =>
-        !(
-          x instanceof InterpolateHtmlPlugin ||
-          x instanceof HtmlWebpackPlugin ||
-          x instanceof UglifyJsPlugin ||
-          x instanceof SWPrecacheWebpackPlugin
-        )
-    ),
+    plugins: config.plugins
+      .filter(
+        x =>
+          !(
+            x instanceof InterpolateHtmlPlugin ||
+            x instanceof HtmlWebpackPlugin ||
+            x instanceof UglifyJsPlugin ||
+            x instanceof SWPrecacheWebpackPlugin
+          )
+      )
+      .concat([new WriteFilePlugin({ output: paths.serverBuild })]),
 
-    externals: [nodeExternals()],
+    externals: ['./assets.json', nodeExternals()],
   });

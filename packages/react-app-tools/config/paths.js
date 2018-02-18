@@ -17,4 +17,5 @@ module.exports = Object.assign(paths, {
   appIndexJs: `${paths.appIndexJs.slice(0, -8)}app.browser.js`,
   appEntry: `${paths.appIndexJs.slice(0, -8)}app.node.js`,
   serverEntry: `${paths.appIndexJs.slice(0, -8)}server.js`,
+  assets: path.join(paths.appBuild, 'assets.json'),
 });

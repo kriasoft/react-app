@@ -51,6 +51,10 @@ copy('react-scripts/scripts/build.js', 'scripts/build.js', [
     '[paths.appHtml, paths.appIndexJs]',
     '[paths.appIndexJs, paths.appEntry, paths.serverEntry]',
   ],
+  [
+    'printBrowsers(paths.appPath);',
+    'printBrowsers(paths.appPath);\n    fs.outputJsonSync(paths.assets, stats.toJson({}, true).assetsByChunkName, { spaces: 2 });',
+  ],
 ]);
 
 copy('react-scripts/scripts/start.js', 'scripts/start.js', [
@@ -76,15 +80,21 @@ copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [
     "require('react-dev-utils/getProcessForPort');\nconst paths = require('./config/paths');",
   ],
   [
+    "console.log('Compiling...');",
+    `console.log('Compiling...');
+
+    global.appPromise = new Promise(resolve => {
+      global.appPromiseResolve = resolve;
+    });`,
+  ],
+  [
     '  });\n  return compiler;',
     `
+    const assets = JSON.stringify(stats.stats[0].toJson({}, true).assetsByChunkName, null, '  ');
+    fs.writeFileSync(paths.assets, assets, 'utf8');
+    delete require.cache[paths.assets];
     delete require.cache[paths.serverBuildAppJs];
-    const code = stats.stats[1].compilation.assets['app.js'].children[0]._value;
-    const m = new Module(paths.serverBuildAppJs, module.parent);
-    m.filename = paths.serverBuildAppJs;
-    m.paths = Module._nodeModulePaths(path.dirname(m.filename));
-    m._compile(code, m.filename);
-    global.appPromiseResolve(m.exports.default);
+    global.appPromiseResolve();
   });\n  return compiler;`,
   ],
   [
