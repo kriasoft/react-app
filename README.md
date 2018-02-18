@@ -4,7 +4,7 @@
 that allows building React applications alongside the Node.js backend, be that server-side rendering
 (SSR), REST or GraphQL APIs, cloud functions, you name it.
 
-It's intended to be used as a drop-off replacement for `react-scripts` NPM module. If you want to
+It's intended to be used as a drop-in replacement for `react-scripts` NPM module. If you want to
 add server-side code into your application built with Create React App, all you have to do is to
 replace `react-scripts` dev dependency in your project with `react-app-tools` plus provide one more
 entry point for the server-side application bundle as demonstrated below:
@@ -38,7 +38,7 @@ entry point for the server-side application bundle as demonstrated below:
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.3"
++   "react-app-tools": "^2.0.0-beta.4"
   },
   "scripts": {
 -   "test": "react-scripts test --env=jsdom",
@@ -74,7 +74,7 @@ const app = express();
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('*', (req, res) => {
+app.get('*', (req, res) => {
   res.send(ReactDOMServer.renderToString(<App />));
 });
 

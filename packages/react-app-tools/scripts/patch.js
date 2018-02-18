@@ -42,30 +42,29 @@ copy('react-scripts/scripts/build.js', 'scripts/build.js', [
   ["const paths = require('../config/paths');\n", ''],
   [
     "const config = require('../config/webpack.config.prod');",
-    "const paths = require('../config/paths');\nconst config = require('react-scripts/config/webpack.config.prod');\nconst configServer = require('../config/webpack.config.server')(config);",
+    "const paths = require('../config/paths');\nconst config = require('../config/webpack.config.prod');\nconst configServer = require('../config/webpack.config.server')(config);",
   ],
   ['webpack(config)', 'webpack([config, configServer])'],
   ['(stats.toJson', '(stats.stats[0].toJson'],
   [/(resolve\({\n\s+)stats,/, '$1stats: stats.stats[0],'],
   [
     '[paths.appHtml, paths.appIndexJs]',
-    '[paths.appHtml, paths.appIndexJs, paths.appEntry, paths.serverEntry]',
+    '[paths.appIndexJs, paths.appEntry, paths.serverEntry]',
   ],
 ]);
 
 copy('react-scripts/scripts/start.js', 'scripts/start.js', [
   ['../config/env', 'react-scripts/config/env'],
   ['./utils/', 'react-scripts/scripts/utils/'],
-  ['../config/webpack.config.dev', 'react-scripts/config/webpack.config.dev'],
   ['react-dev-utils/WebpackDevServerUtils', '../WebpackDevServerUtils'],
   [
-    "const config = require('react-scripts/config/webpack.config.dev');",
-    "const config = require('react-scripts/config/webpack.config.dev');\nconst configServer = require('../config/webpack.config.server')(config);",
+    "const config = require('../config/webpack.config.dev');",
+    "const config = require('../config/webpack.config.dev');\nconst configServer = require('../config/webpack.config.server')(config);",
   ],
   ['webpack, config, appName', 'webpack, [config, configServer], appName'],
   [
     '[paths.appHtml, paths.appIndexJs]',
-    '[paths.appHtml, paths.appIndexJs, paths.appEntry, paths.serverEntry]',
+    '[paths.appIndexJs, paths.appEntry, paths.serverEntry]',
   ],
 ]);
 
@@ -85,7 +84,7 @@ copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [
     m.filename = paths.serverBuildAppJs;
     m.paths = Module._nodeModulePaths(path.dirname(m.filename));
     m._compile(code, m.filename);
-    global.appPromiseResolve(require(m.filename).default);
+    global.appPromiseResolve(m.exports.default);
   });\n  return compiler;`,
   ],
   [
