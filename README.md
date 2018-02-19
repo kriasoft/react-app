@@ -38,7 +38,7 @@ entry point for the server-side application bundle as demonstrated below:
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.5"
++   "react-app-tools": "^2.0.0-beta.6"
   },
   "scripts": {
 -   "test": "react-scripts test --env=jsdom",
@@ -58,7 +58,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.hydrate(<App />, document.getElementById('root'));
 ```
 
 #### `src/app.node.js` - Server-side rendering and REST or GraphQL API

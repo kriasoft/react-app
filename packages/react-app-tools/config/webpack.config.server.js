@@ -82,7 +82,12 @@ module.exports = config =>
             x instanceof SWPrecacheWebpackPlugin
           )
       )
-      .concat([new WriteFilePlugin({ output: paths.serverBuild })]),
+      .concat([
+        new WriteFilePlugin({
+          output: paths.serverBuild,
+          test: /^(.(?!hot-update))*$/,
+        }),
+      ]),
 
     externals: ['./assets.json', nodeExternals()],
   });

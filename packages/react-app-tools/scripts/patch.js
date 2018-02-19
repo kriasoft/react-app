@@ -74,7 +74,6 @@ copy('react-scripts/scripts/start.js', 'scripts/start.js', [
 
 copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [
   [/'\.\//g, "'react-dev-utils/"],
-  ["require('url');", "require('url');\nconst Module = require('module');"],
   [
     "require('react-dev-utils/getProcessForPort');",
     "require('react-dev-utils/getProcessForPort');\nconst paths = require('./config/paths');",
