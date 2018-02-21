@@ -36,13 +36,63 @@ function copy(from, to, fixes = []) {
 
 copy('react-scripts/bin/react-scripts.js', 'bin/react-app.js');
 
+copy('react-scripts/config/env.js', 'config/env.js', [
+  [
+    /const stringified =[\s\S]*?\};/m,
+    `const stringified = Object.keys(raw).reduce((env, key) => {
+    env[\`process.env.$\{key}\`] = JSON.stringify(raw[key]);
+    return env;
+  }, {});`,
+  ],
+  [
+    "delete require.cache[require.resolve('./paths')];",
+    "delete require.cache[require.resolve('react-scripts/config/paths')];\ndelete require.cache[require.resolve('./paths')];",
+  ],
+]);
+
+copy(
+  'react-scripts/config/webpack.config.dev.js',
+  'config/webpack.config.dev.js',
+  [
+    ['./polyfills', 'react-scripts/config/polyfills'],
+    [
+      "const paths = require('./paths');",
+      "const customize = require('../customize');\nconst paths = require('./paths');",
+    ],
+    ['module.exports = {', "module.exports = customize('webpack', {"],
+    [
+      'hints: false,\n  },\n};',
+      "hints: false,\n  },\n}, { target: 'browser' });",
+    ],
+  ]
+);
+
+copy(
+  'react-scripts/config/webpack.config.prod.js',
+  'config/webpack.config.prod.js',
+  [
+    ['./polyfills', 'react-scripts/config/polyfills'],
+    ["['process.env'].NODE_ENV", "['process.env.NODE_ENV']"],
+    [
+      "const paths = require('./paths');",
+      "const customize = require('../customize');\nconst paths = require('./paths');",
+    ],
+    ['module.exports = {', "module.exports = customize('webpack', {"],
+    [
+      "child_process: 'empty',\n  },\n};",
+      "child_process: 'empty',\n  },\n}, { target: 'browser' });",
+    ],
+  ]
+);
+
 copy('react-scripts/scripts/build.js', 'scripts/build.js', [
-  ['../config/env', 'react-scripts/config/env'],
   ['./utils/', 'react-scripts/scripts/utils/'],
   ["const paths = require('../config/paths');\n", ''],
   [
     "const config = require('../config/webpack.config.prod');",
-    "const paths = require('../config/paths');\nconst config = require('../config/webpack.config.prod');\nconst configServer = require('../config/webpack.config.server')(config);",
+    `const paths = require('../config/paths');
+const config = require('../config/webpack.config.prod');
+const configServer = require('../config/webpack.config.server')(config);`,
   ],
   ['webpack(config)', 'webpack([config, configServer])'],
   ['(stats.toJson', '(stats.stats[0].toJson'],
@@ -58,18 +108,22 @@ copy('react-scripts/scripts/build.js', 'scripts/build.js', [
 ]);
 
 copy('react-scripts/scripts/start.js', 'scripts/start.js', [
-  ['../config/env', 'react-scripts/config/env'],
   ['./utils/', 'react-scripts/scripts/utils/'],
   ['react-dev-utils/WebpackDevServerUtils', '../WebpackDevServerUtils'],
   [
     "const config = require('../config/webpack.config.dev');",
-    "const config = require('../config/webpack.config.dev');\nconst configServer = require('../config/webpack.config.server')(config);",
+    `const config = require('../config/webpack.config.dev');
+const configServer = require('../config/webpack.config.server')(config);`,
   ],
   ['webpack, config, appName', 'webpack, [config, configServer], appName'],
   [
     '[paths.appHtml, paths.appIndexJs]',
     '[paths.appIndexJs, paths.appEntry, paths.serverEntry]',
   ],
+]);
+
+copy('react-scripts/scripts/test.js', 'scripts/test.js', [
+  ['./utils/', 'react-scripts/scripts/utils/'],
 ]);
 
 copy('react-dev-utils/WebpackDevServerUtils.js', 'WebpackDevServerUtils.js', [

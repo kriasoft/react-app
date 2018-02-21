@@ -1,5 +1,9 @@
 bin/react-app.js
+config/env.js
+config/webpack.config.dev.js
+config/webpack.config.prod.js
 scripts/build.js
 scripts/start.js
+scripts/test.js
 README.md
 WebpackDevServerUtils.js

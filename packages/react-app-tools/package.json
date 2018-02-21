@@ -1,6 +1,6 @@
 {
   "name": "react-app-tools",
-  "version": "2.0.0-beta.6",
+  "version": "2.0.0-beta.10",
   "description": "Build and test tooling for front-end application development with Node.js and React.",
   "repository": "kriasoft/react-app",
   "bugs": {
@@ -30,6 +30,7 @@
     "bin",
     "config",
     "scripts",
+    "customize.js",
     "README.md",
     "WebpackDevServerUtils.js"
   ],

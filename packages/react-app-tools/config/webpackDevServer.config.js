@@ -25,7 +25,7 @@ module.exports = function(proxy, allowedHost) {
       });
     },
     after(app) {
-      app.get('*', (req, res, next) => {
+      app.use((req, res, next) => {
         global.appPromise
           .then(() => {
             const app = require(paths.serverBuildAppJs).default;

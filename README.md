@@ -38,7 +38,7 @@ entry point for the server-side application bundle as demonstrated below:
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.6"
++   "react-app-tools": "^2.0.0-beta.10"
   },
   "scripts": {
 -   "test": "react-scripts test --env=jsdom",
@@ -69,13 +69,19 @@ import express from 'express';
 import React from 'react';
 import ReactDOMServer from 'react-dom/server';
 import App from './components/App';
+import assets from './assets.json';
 
 const app = express();
 
-app.use(express.static(path.join(__dirname, 'public')));
-
 app.get('*', (req, res) => {
-  res.send(ReactDOMServer.renderToString(<App />));
+  res.send(`
+    <html>
+      <body>
+        <div id="root">${ReactDOMServer.renderToString(<App />)}</div>
+        ${assets.map(src => `<script src="${src}"></script>`)}
+      </body>
+    </html>
+  `);
 });
 
 export default app;
@@ -109,6 +115,30 @@ For more information refer to Create React App documentation:
 Join our Telegram chat for support and feature requests - https://t.me/reactapp
 
 <p align="center"><a href="https://www.youtube.com/watch?v=GH3kJwQ7mxM"><img src="http://img.youtube.com/vi/GH3kJwQ7mxM/maxresdefault.jpg" width="1187" alt="Server-side rendering with React.js" /><br /><sup>How fast is React SSR?</sup></a></p>
+
+### How to Customize
+
+Create `override.js` file in the root of your project containing configuration overrides.
+For example:
+
+```js
+module.exports = {
+  babel(config, { target }) {
+    return {
+      ...config,
+      plugins: config.plugins.concact(require.resolve('babel-relay-plugin')),
+    };
+  },
+  webpack(config, { target }) {
+    return {
+      ...config,
+      plugins: target === 'node'
+        ? config.plugins.concat(new LimitChunkCountPlugin({ maxChunks: 1 })),
+        : config.plugins
+    };
+  }
+};
+```
 
 ### Contribute
 

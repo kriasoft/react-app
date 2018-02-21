@@ -10,12 +10,16 @@
 const path = require('path');
 const paths = require('react-scripts/config/paths');
 
+const { appPath, appSrc } = paths;
+const serverBuild = paths.serverBuild || paths.appBuild;
+
 module.exports = Object.assign(paths, {
-  serverBuild: paths.appBuild,
-  serverBuildAppJs: path.join(paths.appBuild, 'app.js'),
-  appBuild: path.join(paths.appBuild, 'public'),
-  appIndexJs: `${paths.appIndexJs.slice(0, -8)}app.browser.js`,
-  appEntry: `${paths.appIndexJs.slice(0, -8)}app.node.js`,
-  serverEntry: `${paths.appIndexJs.slice(0, -8)}server.js`,
-  assets: path.join(paths.appBuild, 'assets.json'),
+  serverBuild,
+  serverBuildAppJs: path.join(serverBuild, 'app.js'),
+  appBuild: path.join(serverBuild, 'public'),
+  appIndexJs: path.join(appSrc, 'app.browser.js'),
+  override: path.join(appPath, 'override.js'),
+  appEntry: path.join(appSrc, 'app.node.js'),
+  serverEntry: path.join(appSrc, 'server.js'),
+  assets: path.join(serverBuild, 'assets.json'),
 });
