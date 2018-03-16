@@ -40,17 +40,25 @@ const {
   createCompiler,
   prepareProxy,
   prepareUrls,
-} = require('react-dev-utils/WebpackDevServerUtils');
+} = require('../WebpackDevServerUtils');
 const openBrowser = require('react-dev-utils/openBrowser');
 const paths = require('../config/paths');
-const config = require('../config/webpack.config.dev');
+const customize = require('../customize');
+const config = customize('webpack', require('../config/webpack.config.dev'), {
+  target: 'browser',
+});
+const configServer = customize(
+  'webpack',
+  require('../config/webpack.config.server')('dev'),
+  { target: 'node' }
+);
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
 const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (!checkRequiredFiles([paths.appIndexJs, paths.appNodeJs])) {
   process.exit(1);
 }
 
@@ -69,7 +77,9 @@ if (process.env.HOST) {
   console.log(
     `If this was unintentional, check that you haven't mistakenly set it in your shell.`
   );
-  console.log(`Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`);
+  console.log(
+    `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
+  );
   console.log();
 }
 
@@ -91,7 +101,13 @@ checkBrowsers(paths.appPath)
     const appName = require(paths.appPackageJson).name;
     const urls = prepareUrls(protocol, HOST, port);
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(webpack, config, appName, urls, useYarn);
+    const compiler = createCompiler(
+      webpack,
+      [config, configServer],
+      appName,
+      urls,
+      useYarn
+    );
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);

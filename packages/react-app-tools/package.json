@@ -1,24 +1,42 @@
 {
-  "name": "react-scripts",
-  "version": "2.0.0-next.47d2d941",
-  "description": "Configuration and scripts for Create React App.",
-  "repository": "facebook/create-react-app",
+  "name": "react-app-tools",
+  "version": "2.0.0",
+  "description": "Build and test tooling for web application development with Node.js and React.",
+  "repository": "kriasoft/react-app",
+  "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",
+  "contributors": [
+    "Konstantin Tarkus <hello@tarkus.me> (https://tarkus.me)"
+  ],
   "license": "MIT",
+  "keywords": [
+    "react",
+    "reactjs",
+    "react.js",
+    "server rendering",
+    "server-rendering",
+    "server-side rendering",
+    "server side rendering",
+    "pre-render",
+    "prerender",
+    "ssr"
+  ],
   "engines": {
     "node": ">=6"
   },
   "bugs": {
-    "url": "https://github.com/facebook/create-react-app/issues"
+    "url": "https://github.com/kriasoft/react-app/issues"
   },
   "files": [
     "bin",
     "config",
     "scripts",
     "template",
-    "utils"
+    "utils",
+    "customize.js",
+    "WebpackDevServerUtils.js"
   ],
   "bin": {
-    "react-scripts": "./bin/react-scripts.js"
+    "react-app": "./bin/react-app.js"
   },
   "dependencies": {
     "@babel/core": "7.0.0-beta.38",
@@ -49,7 +67,6 @@
     "globby": "7.1.1",
     "graphql": "0.12.3",
     "graphql-tag": "2.6.1",
-    "html-webpack-plugin": "2.30.1",
     "identity-obj-proxy": "3.0.0",
     "jest": "22.1.2",
     "object-assign": "4.1.1",
@@ -67,11 +84,14 @@
     "webpack": "3.10.0",
     "webpack-dev-server": "2.11.0",
     "webpack-manifest-plugin": "1.3.2",
-    "whatwg-fetch": "2.0.3"
+    "webpack-node-externals": "^1.6.0",
+    "whatwg-fetch": "2.0.3",
+    "write-file-webpack-plugin": "^4.2.0"
   },
   "devDependencies": {
     "react": "^16.0.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-scripts": "2.0.0-next.47d2d941"
   },
   "optionalDependencies": {
     "fsevents": "1.1.3"

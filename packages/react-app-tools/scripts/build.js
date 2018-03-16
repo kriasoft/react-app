@@ -33,8 +33,16 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
-const config = require('../config/webpack.config.prod');
 const paths = require('../config/paths');
+const customize = require('../customize');
+const config = customize('webpack', require('../config/webpack.config.prod'), {
+  target: 'browser',
+});
+const configServer = customize(
+  'webpack',
+  require('../config/webpack.config.server')('prod'),
+  { target: 'node' }
+);
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
 const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
@@ -52,7 +60,7 @@ const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 
 // Warn and crash if required files are missing
-if (!checkRequiredFiles([paths.appHtml, paths.appIndexJs])) {
+if (!checkRequiredFiles([paths.appIndexJs, paths.appNodeJs])) {
   process.exit(1);
 }
 
@@ -115,6 +123,11 @@ checkBrowsers(paths.appPath)
         useYarn
       );
       printBrowsers(paths.appPath);
+      fs.outputJsonSync(
+        paths.assetsJson,
+        stats.toJson({}, true).assetsByChunkName,
+        { spaces: 2 }
+      );
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
@@ -133,13 +146,13 @@ checkBrowsers(paths.appPath)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack(config);
+  let compiler = webpack([config, configServer]);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
       if (err) {
         return reject(err);
       }
-      const messages = formatWebpackMessages(stats.toJson({}, true));
+      const messages = formatWebpackMessages(stats.stats[0].toJson({}, true));
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.
@@ -163,7 +176,7 @@ function build(previousFileSizes) {
         return reject(new Error(messages.warnings.join('\n\n')));
       }
       return resolve({
-        stats,
+        stats: stats.stats[0],
         previousFileSizes,
         warnings: messages.warnings,
       });

@@ -14,9 +14,10 @@ const chalk = require('chalk');
 const detect = require('detect-port-alt');
 const isRoot = require('is-root');
 const inquirer = require('inquirer');
-const clearConsole = require('./clearConsole');
-const formatWebpackMessages = require('./formatWebpackMessages');
-const getProcessForPort = require('./getProcessForPort');
+const clearConsole = require('react-dev-utils/clearConsole');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const getProcessForPort = require('react-dev-utils/getProcessForPort');
+const paths = require('./config/paths');
 
 const isInteractive = process.stdout.isTTY;
 let handleCompile;
@@ -136,9 +137,17 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
       clearConsole();
     }
     console.log('Compiling...');
+
+    global.appPromise = new Promise(resolve => {
+      global.appPromiseResolve = resolve;
+    });
   });
 
   let isFirstCompile = true;
+
+  global.appPromise = new Promise(resolve => {
+    global.appPromiseResolve = resolve;
+  });
 
   // "done" event fires when Webpack has finished recompiling the bundle.
   // Whether or not you have warnings or errors, you will get this event.
@@ -189,6 +198,26 @@ function createCompiler(webpack, config, appName, urls, useYarn) {
           ' to the line before.\n'
       );
     }
+
+    const assets = JSON.stringify(
+      stats.stats[0].toJson({}, true).assetsByChunkName,
+      null,
+      '  '
+    );
+    fs.writeFileSync(paths.assetsJson, assets, 'utf8');
+    if (paths.nodeBuildAppJs in require.cache) {
+      try {
+        const dispose = (require(paths.nodeBuildAppJs) || {}).dispose;
+        if (typeof dispose === 'function') {
+          dispose();
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
+    delete require.cache[paths.assetsJson];
+    delete require.cache[paths.nodeBuildAppJs];
+    global.appPromiseResolve();
   });
   return compiler;
 }

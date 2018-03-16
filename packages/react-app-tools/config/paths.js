@@ -52,10 +52,13 @@ function getServedPath(appPackageJson) {
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp('build/public'), // EDIT
+  nodeBuild: resolveApp('build'), // ADD
+  nodeBuildAppJs: resolveApp('build/app.js'), // ADD
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp('src/app.browser.js'), // EDIT
+  appNodeJs: resolveApp('src/app.node.js'), // ADD
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
@@ -63,6 +66,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  configOverrides: resolveApp('config-overrides.js'), // ADD
+  assetsJson: resolveApp('build/assets.json'), // ADD
 };
 
 let checkForMonorepo = true;
@@ -74,10 +79,13 @@ const resolveOwn = relativePath => path.resolve(__dirname, '..', relativePath);
 module.exports = {
   dotenv: resolveApp('.env'),
   appPath: resolveApp('.'),
-  appBuild: resolveApp('build'),
+  appBuild: resolveApp('build/public'), // EDIT
+  nodeBuild: resolveApp('build'), // ADD
+  nodeBuildAppJs: resolveApp('build/app.js'), // ADD
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/index.js'),
+  appIndexJs: resolveApp('src/app.browser.js'), // EDIT
+  appNodeJs: resolveApp('src/app.node.js'), // ADD
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   yarnLockFile: resolveApp('yarn.lock'),
@@ -85,6 +93,8 @@ module.exports = {
   appNodeModules: resolveApp('node_modules'),
   publicUrl: getPublicUrl(resolveApp('package.json')),
   servedPath: getServedPath(resolveApp('package.json')),
+  configOverrides: resolveApp('config-overrides.js'), // ADD
+  assetsJson: resolveApp('build/assets.json'), // ADD
   // These properties only exist before ejecting:
   ownPath: resolveOwn('.'),
   ownNodeModules: resolveOwn('node_modules'), // This is empty on npm 3
@@ -100,10 +110,13 @@ if (useTemplate) {
   module.exports = {
     dotenv: resolveOwn('template/.env'),
     appPath: resolveApp('.'),
-    appBuild: resolveOwn('../../build'),
+    appBuild: resolveOwn('../../build/public'), // EDIT
+    nodeBuild: resolveOwn('../../build'), // ADD
+    nodeBuildAppJs: resolveOwn('../../build/app.js'), // ADD
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/index.js'),
+    appIndexJs: resolveOwn('template/src/app.browser.js'), // EDIT
+    appNodeJs: resolveOwn('template/src/app.node.js'), // ADD
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     yarnLockFile: resolveOwn('template/yarn.lock'),
@@ -111,6 +124,8 @@ if (useTemplate) {
     appNodeModules: resolveOwn('node_modules'),
     publicUrl: getPublicUrl(resolveOwn('package.json')),
     servedPath: getServedPath(resolveOwn('package.json')),
+    configOverrides: resolveOwn('template/config-overrides.js'), // ADD
+    assetsJson: resolveOwn('../../build/assets.json'), // ADD
     // These properties only exist before ejecting:
     ownPath: resolveOwn('.'),
     ownNodeModules: resolveOwn('node_modules'),

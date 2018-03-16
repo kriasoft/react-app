@@ -82,13 +82,19 @@ module.exports = function(proxy, allowedHost) {
     https: protocol === 'https',
     host: host,
     overlay: false,
-    historyApiFallback: {
-      // Paths with dots should still use the history fallback.
-      // See https://github.com/facebook/create-react-app/issues/387.
-      disableDotRule: true,
-    },
+    historyApiFallback: false,
     public: allowedHost,
     proxy,
+    setup(app) {
+      app.get('/', (req, res, next) => {
+        global.appPromise
+          .then(() => {
+            const app = require(paths.nodeBuildAppJs).default;
+            app.handle(req, res);
+          })
+          .catch(next);
+      });
+    },
     before(app) {
       // This lets us open files from the runtime error overlay.
       app.use(errorOverlayMiddleware());
@@ -98,6 +104,16 @@ module.exports = function(proxy, allowedHost) {
       // it used the same host and port.
       // https://github.com/facebook/create-react-app/issues/2272#issuecomment-302832432
       app.use(noopServiceWorkerMiddleware());
+    },
+    after(app) {
+      app.use((req, res, next) => {
+        global.appPromise
+          .then(() => {
+            const app = require(paths.nodeBuildAppJs).default;
+            app.handle(req, res);
+          })
+          .catch(next);
+      });
     },
   };
 };

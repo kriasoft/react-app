@@ -1,29 +1,37 @@
-# React App SDK &nbsp; <a href="https://github.com/kriasoft/react-app/stargazers"><img src="https://img.shields.io/github/stars/kriasoft/react-app.svg?style=social&label=Star&maxAge=3600" height="20"></a> <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&label=Follow&maxAge=3600" height="20"></a> <a href="https://t.me/reactapp"><img src="https://img.shields.io/badge/chat-Telegram-green.svg?style=social&maxAge=3600" height="20"></a>
+<h1 align="center">
+  React App SDK<br>
+  <a href="https://npmjs.com/package/react-app-tools"><img src="https://img.shields.io/npm/v/react-app-tools.svg?maxAge=3600" height="20"></a>
+  <a href="https://npmjs.com/package/react-app-tools"><img src="https://img.shields.io/npm/dm/react-app-tools.svg?maxAge=3600" height="20"></a>
+  <a href="https://opencollective.com/react-app"><img src="https://opencollective.com/react-app/backers/badge.svg?maxAge=3600" height="20"></a>
+  <a href="https://twitter.com/ReactSDK"><img src="https://img.shields.io/twitter/follow/ReactSDK.svg?style=social&amp;label=Follow&amp;maxAge=3600" height="20"></a>
+  <a href="https://t.me/reactapp"><img src="https://img.shields.io/badge/chat-Telegram-green.svg?style=social&amp;maxAge=3600" height="20"></a>
+</h1>
 
-**React App SDK** is an extension to **[Create React App](https://github.com/facebook/create-react-app)**
-that allows building React applications alongside the Node.js backend, be that server-side rendering
-(SSR), REST or GraphQL APIs, cloud functions, you name it.
+Everything you love about **[Create React App](https://github.com/facebook/create-react-app)** —
+the best tooling for developing React.js applications, plus server-side code support (SSR, GraphQL
+API, etc) and config overrides (Babel, Webpack, etc.). See the
+[demo project](https://github.com/kriasoft/react-firebase-starter).
 
-It's intended to be used as a drop-in replacement for `react-scripts` NPM module. If you want to
-add server-side code into your application built with Create React App, all you have to do is to
-replace `react-scripts` dev dependency in your project with `react-app-tools` plus provide one more
-entry point for the server-side application bundle as demonstrated below:
+**React App SDK** is intended to be used as a drop-in replacement for `react-scripts` NPM module.
+If you want to add server-side code into your application built with Create React App, all you have
+to do is to replace `react-scripts` dev dependency with `react-app-tools` plus provide one more
+entry point for Node.js as demonstrated below:
 
 #### Directory Layout
 
 ```bash
 .
-├── /build/                     # Compiled output
-│   ├── /public/                # Pre-compiled client-side app
-│   └── server.js               # Pre-compiled Node.js app
-├── /src/                       # Application source files
-│   ├── /components/            # React.js components
+├── build/                      # Compiled output
+│   ├── public/                 # Pre-compiled client-side app
+│   └── app.js                  # Pre-compiled Node.js app
+├── src/                        # Application source files
+│   ├── components/             # React.js components
 │   │   ├── /App/               #   - The top-level React component
 │   │   ├── /Button/            #   - Some other UI element
 │   │   └── ...                 #   - etc.
 │   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
-│   ├── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
-│   └── server.js               # Server-side entiry point, e.g. app.listen(process.env.PORT)
+│   └── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
+├── config-overrides.js         # Configuration overrides for Webpack, Babel, etc. (optional)
 └── package.json                # List of project dependencies and NPM scripts
 ```
 
@@ -32,21 +40,21 @@ entry point for the server-side application bundle as demonstrated below:
 ```diff
 {
   "dependencies": {
-+   "express": "^4.6.12",
++   "express": "^4.6.13",
     "react": "^16.2.0",
     "react-dom": "^16.2.0"
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0-beta.10"
++   "react-app-tools": "^2.0.0"
   },
   "scripts": {
--   "test": "react-scripts test --env=jsdom",
-+   "test": "react-app test --env=jsdom",
+-   "start": "react-scripts start",
++   "start": "react-app start",
 -   "build": "react-scripts build",
 +   "build": "react-app build",
--   "start": "react-scripts start"
-+   "start": "react-app start"
+-   "test": "react-scripts test --env=jsdom"
++   "test": "react-app test --env=jsdom"
   }
 }
 ```
@@ -61,15 +69,15 @@ import App from './components/App';
 ReactDOM.hydrate(<App />, document.getElementById('root'));
 ```
 
-#### `src/app.node.js` - Server-side rendering and REST or GraphQL API
+#### `src/app.node.js` - Server-side rendering and/or API endpoint
 
 ```js
-import path from 'path';
-import express from 'express';
-import React from 'react';
-import ReactDOMServer from 'react-dom/server';
-import App from './components/App';
-import assets from './assets.json';
+const path = require('path');
+const express = require('express');
+const React = require('react');
+const ReactDOMServer = require('react-dom/server');
+const App = require('./components/App');
+const assets = require('./assets.json');
 
 const app = express();
 
@@ -84,15 +92,11 @@ app.get('*', (req, res) => {
   `);
 });
 
-export default app;
-```
-
-#### `src/server.js` - Server-side entry point
-
-```js
-import app from './app.node';
-
-app.listen(process.env.PORT || 8080);
+if (process.env.NODE_ENV === 'production') {
+  app.listen(process.env.PORT || 8080);
+} else {
+  module.exports.default = app;
+}
 ```
 
 You can launch the app in development mode by running:
@@ -116,10 +120,10 @@ Join our Telegram chat for support and feature requests - https://t.me/reactapp
 
 <p align="center"><a href="https://www.youtube.com/watch?v=GH3kJwQ7mxM"><img src="http://img.youtube.com/vi/GH3kJwQ7mxM/maxresdefault.jpg" width="1187" alt="Server-side rendering with React.js" /><br /><sup>How fast is React SSR?</sup></a></p>
 
-### How to Customize
+## How to Customize
 
-Create `override.js` file in the root of your project containing configuration overrides.
-For example:
+Create `config-overrides.js` file in the root of your project containing with configuration
+overrides. Here is an example:
 
 ```js
 module.exports = {
@@ -140,7 +144,49 @@ module.exports = {
 };
 ```
 
-### Contribute
+## Backers
+
+Love **React App SDK**? Help us keep it alive by [donating](https://opencollective.com/react-app)
+funds to cover project expenses!
+
+<a href="https://opencollective.com/react-app/backers/0/website">
+  <img src="https://opencollective.com/react-app/backers/0/avatar">
+</a>
+<a href="https://opencollective.com/react-app/backers/1/website">
+  <img src="https://opencollective.com/react-app/backers/1/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/2/website">
+  <img src="https://opencollective.com/react-app/backers/2/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/3/website">
+  <img src="https://opencollective.com/react-app/backers/3/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/4/website">
+  <img src="https://opencollective.com/react-app/backers/4/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/5/website">
+  <img src="https://opencollective.com/react-app/backers/5/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/6/website">
+  <img src="https://opencollective.com/react-app/backers/6/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/7/website">
+  <img src="https://opencollective.com/react-app/backers/7/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/8/website">
+  <img src="https://opencollective.com/react-app/backers/8/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/9/website">
+  <img src="https://opencollective.com/react-app/backers/9/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/10/website">
+  <img src="https://opencollective.com/react-app/backers/10/avatar" height="64">
+</a>
+<a href="https://opencollective.com/react-app/backers/11/website">
+  <img src="https://opencollective.com/react-app/backers/11/avatar" height="64">
+</a>
+
+## Contribute
 
 Help shape the future of **React App SDK** by joining our [community](https://t.me/reactapp)
 today, check out the [open issues](https://github.com/kriasoft/react-app/issues), submit [new
@@ -148,6 +194,6 @@ feature ideas](https://github.com/kriasoft/react-app/issues/new?labels=enhanceme
 reports](https://github.com/kriasoft/react-app/issues/new?labels=bug), send us [pull
 requests](CONTRIBUTING.md#submitting-a-pull-request)!
 
-### License
+## License
 
-[MIT](https://github.com/kriasoft/react-app/blob/master/LICENSE.txt) © 2016-present Facebook, Kriasoft
+[MIT](https://github.com/kriasoft/react-app/blob/master/LICENSE) © 2016-present Facebook, Kriasoft.
