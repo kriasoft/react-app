@@ -24,6 +24,6 @@
     ]
   },
   "scripts": {
-    "precommit": "lint-staged"
+    "precommit2": "lint-staged"
   }
 }
