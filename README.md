@@ -25,11 +25,8 @@ entry point for Node.js as demonstrated below:
 │   ├── public/                 # Pre-compiled client-side app
 │   └── app.js                  # Pre-compiled Node.js app
 ├── src/                        # Application source files
-│   ├── components/             # React.js components
-│   │   ├── /App/               #   - The top-level React component
-│   │   ├── /Button/            #   - Some other UI element
-│   │   └── ...                 #   - etc.
 │   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
+|   |── App.js                  # Component
 │   └── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
 ├── config-overrides.js         # Configuration overrides for Webpack, Babel, etc. (optional)
 └── package.json                # List of project dependencies and NPM scripts
@@ -38,46 +35,51 @@ entry point for Node.js as demonstrated below:
 #### `package.json`
 
 ```diff
-{
-  "dependencies": {
-+   "express": "^4.6.13",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
-  },
-  {
--   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0"
-  },
-  "scripts": {
--   "start": "react-scripts start",
-+   "start": "react-app start",
--   "build": "react-scripts build",
-+   "build": "react-app build",
--   "test": "react-scripts test --env=jsdom"
-+   "test": "react-app test --env=jsdom"
-  }
-}
+ {
+   "name": "my-app",
+   "version": "0.1.0",
+   "private": true,
+   "dependencies": {
++    "express": "^4.16.3",
+     "react": "^16.3.2",
+-    "react-dom": "^16.3.2",
+-    "react-scripts": "1.1.4"
++    "react-app-tools": "^2.0.2",
++    "react-dom": "^16.3.2"
+   },
+   "scripts": {
+-    "start": "react-scripts start",
+-    "build": "react-scripts build",
+-    "test": "react-scripts test --env=jsdom",
+-    "eject": "react-scripts eject"
++    "start": "react-app start",
++    "build": "react-app build",
++    "test": "react-app test --env=jsdom",
++    "eject": "react-app eject"
+   }
+ }
 ```
 
-#### `src/app.browser.js` - Client-side rendering
+#### Rename `src/index.js` to `src/app.browser.js` - Client-side rendering
 
-```js
-import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './components/App';
-
-ReactDOM.hydrate(<App />, document.getElementById('root'));
+```diff
+ import React from 'react';
+ import ReactDOM from 'react-dom';
+ import App from './App';
+ import registerServiceWorker from './registerServiceWorker';
+ 
+-ReactDOM.render(<App />, document.getElementById('root'));
++ReactDOM.hydrate(<App />, document.getElementById('root'));
+ registerServiceWorker();
 ```
 
 #### `src/app.node.js` - Server-side rendering and/or API endpoint
 
 ```js
-const path = require('path');
 const express = require('express');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const App = require('./components/App');
-const assets = require('./assets.json');
+const App = require('./App').default;
 
 const app = express();
 
@@ -86,7 +88,6 @@ app.get('*', (req, res) => {
     <html>
       <body>
         <div id="root">${ReactDOMServer.renderToString(<App />)}</div>
-        ${assets.map(src => `<script src="${src}"></script>`)}
       </body>
     </html>
   `);
@@ -102,12 +103,12 @@ if (process.env.NODE_ENV === 'production') {
 You can launch the app in development mode by running:
 
 ```sh
-$ npm install
-$ npm start
+$ yarn
+$ yarn start
 ```
 
 Then open [http://localhost:3000/](http://localhost:3000/) to see your app.<br>
-When you’re ready to deploy to production, create a minified bundle with `npm run build`.
+When you’re ready to deploy to production, create a minified bundle with `yarn build`.
 
 <p align="center"><img src='https://camo.githubusercontent.com/506a5a0a33aebed2bf0d24d3999af7f582b31808/687474703a2f2f692e696d6775722e636f6d2f616d794e66434e2e706e67' width='600' alt='npm start'></p>
 
@@ -130,7 +131,7 @@ module.exports = {
   babel(config, { target }) {
     return {
       ...config,
-      plugins: config.plugins.concact(require.resolve('babel-relay-plugin')),
+      plugins: config.plugins.concat(require.resolve('babel-relay-plugin')),
     };
   },
   webpack(config, { target }) {
