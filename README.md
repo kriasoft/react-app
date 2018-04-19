@@ -131,7 +131,7 @@ module.exports = {
   babel(config, { target }) {
     return {
       ...config,
-      plugins: config.plugins.concact(require.resolve('babel-relay-plugin')),
+      plugins: config.plugins.concat(require.resolve('babel-relay-plugin')),
     };
   },
   webpack(config, { target }) {
