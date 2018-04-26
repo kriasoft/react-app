@@ -46,7 +46,7 @@ entry point for Node.js as demonstrated below:
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.0"
++   "react-app-tools": "^2.0.3"
   },
   "scripts": {
 -   "start": "react-scripts start",

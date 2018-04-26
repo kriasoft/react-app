@@ -29,7 +29,6 @@ if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
 }
 // @remove-on-eject-end
 
-const fs = require('fs');
 const chalk = require('chalk');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -54,7 +53,6 @@ const configServer = customize(
 );
 const createDevServerConfig = require('../config/webpackDevServer.config');
 
-const useYarn = fs.existsSync(paths.yarnLockFile);
 const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
@@ -106,7 +104,7 @@ checkBrowsers(paths.appPath)
       [config, configServer],
       appName,
       urls,
-      useYarn
+      paths.useYarn
     );
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
