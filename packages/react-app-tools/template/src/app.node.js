@@ -1,8 +1,7 @@
-const path = require('path');
 const express = require('express');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const App = require('./components/App');
+const App = require('./components/App').default;
 const assets = require('./assets.json');
 
 const app = express();
@@ -12,7 +11,7 @@ app.get('*', (req, res) => {
     <html>
       <body>
         <div id="root">${ReactDOMServer.renderToString(<App />)}</div>
-        ${assets.map(src => `<script src="${src}"></script>`)}
+        ${assets.main.map(src => `<script src="${src}"></script>`)}
       </body>
     </html>
   `);

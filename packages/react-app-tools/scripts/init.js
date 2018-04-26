@@ -92,10 +92,9 @@ module.exports = function(
 
   // Setup the script rules
   appPackage.scripts = {
-    start: 'react-scripts start',
-    build: 'react-scripts build',
-    test: 'react-scripts test --env=jsdom',
-    eject: 'react-scripts eject',
+    start: 'react-app start',
+    build: 'react-app build',
+    test: 'react-app test --env=jsdom',
   };
 
   appPackage.browserslist = defaultBrowsers;
