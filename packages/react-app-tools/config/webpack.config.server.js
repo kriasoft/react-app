@@ -8,7 +8,6 @@
 'use strict';
 
 const nodeExternals = require('webpack-node-externals');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin');
 const WriteFilePlugin = require('write-file-webpack-plugin');
 const paths = require('./paths');
@@ -21,13 +20,18 @@ module.exports = env => {
     node: false,
 
     entry: {
-      app: paths.appNodeJs,
+      server: paths.appNodeJs,
     },
 
     output: Object.assign({}, config.output, {
       path: paths.nodeBuild,
       filename: '[name].js',
       libraryTarget: 'commonjs2',
+    }),
+
+    optimization: Object.assign({}, config.optimization, {
+      minimize: false,
+      runtimeChunk: false,
     }),
 
     module: Object.assign({}, config.module, {
@@ -40,6 +44,33 @@ module.exports = env => {
                   use: y.use.slice(1),
                 });
               }
+
+              if (
+                y.use &&
+                y.use[1] &&
+                y.use[1].options &&
+                y.use[1].options.presets &&
+                y.use[1].options.presets[0] === require.resolve('./babel')
+              ) {
+                return Object.assign({}, y, {
+                  use: y.use.map(z => {
+                    if (
+                      z.options &&
+                      z.options.presets &&
+                      z.options.presets[0] === require.resolve('./babel')
+                    ) {
+                      return Object.assign({}, z, {
+                        options: Object.assign({}, z.options, {
+                          presets: [
+                            [require.resolve('./babel'), { target: 'node' }],
+                          ],
+                        }),
+                      });
+                    }
+                    return z;
+                  }),
+                });
+              }
               return y;
             }),
           });
@@ -50,10 +81,7 @@ module.exports = env => {
 
     // Remove plugins that are not needed in the server-side bundle
     plugins: config.plugins
-      .filter(
-        x =>
-          !(x instanceof UglifyJsPlugin || x instanceof SWPrecacheWebpackPlugin)
-      )
+      .filter(x => !(x instanceof SWPrecacheWebpackPlugin))
       .concat([
         new WriteFilePlugin({
           output: paths.nodeBuild,

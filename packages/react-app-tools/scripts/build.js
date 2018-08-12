@@ -33,6 +33,7 @@ const path = require('path');
 const chalk = require('chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
+const bfj = require('bfj');
 const paths = require('../config/paths');
 const customize = require('../customize');
 const config = customize('webpack', require('../config/webpack.config.prod'), {
@@ -44,7 +45,7 @@ const configServer = customize(
   { target: 'node' }
 );
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+// const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
@@ -62,6 +63,10 @@ const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
 if (!checkRequiredFiles([paths.appIndexJs, paths.appNodeJs])) {
   process.exit(1);
 }
+
+// Process CLI arguments
+const argv = process.argv.slice(2);
+const writeStatsJson = argv.indexOf('--stats') !== -1;
 
 // We require that you explictly set browsers and do not fall back to
 // browserslist defaults.
@@ -151,7 +156,7 @@ function build(previousFileSizes) {
       if (err) {
         return reject(err);
       }
-      const messages = formatWebpackMessages(stats.stats[0].toJson({}, true));
+      const messages = stats.toJson({}, true); // formatWebpackMessages(stats.toJson({}, true));
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.
@@ -174,11 +179,20 @@ function build(previousFileSizes) {
         );
         return reject(new Error(messages.warnings.join('\n\n')));
       }
-      return resolve({
+
+      const resolveArgs = {
         stats: stats.stats[0],
         previousFileSizes,
         warnings: messages.warnings,
-      });
+      };
+      if (writeStatsJson) {
+        return bfj
+          .write(paths.appBuild + '/bundle-stats.json', stats.stats[0].toJson())
+          .then(() => resolve(resolveArgs))
+          .catch(error => reject(new Error(error)));
+      }
+
+      return resolve(resolveArgs);
     });
   });
 }

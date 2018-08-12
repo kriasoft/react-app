@@ -45,7 +45,7 @@ module.exports = function customize(name, config, options) {
                             z =>
                               z.loader === require.resolve('babel-loader') &&
                               z.options.presets[0] ===
-                                require.resolve('babel-preset-react-app')
+                                require.resolve('./config/babel')
                                 ? Object.assign({}, z, {
                                     options: overrideBabel(z.options, options),
                                   })

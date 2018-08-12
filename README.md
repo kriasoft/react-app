@@ -7,10 +7,9 @@
   <a href="https://t.me/reactapp"><img src="https://img.shields.io/badge/chat-Telegram-green.svg?style=social&amp;maxAge=3600" height="20"></a>
 </h1>
 
-Everything you love about **[Create React App](https://github.com/facebook/create-react-app)** —
-the best tooling for developing React.js applications, plus server-side code support (SSR, GraphQL
-API, etc) and config overrides (Babel, Webpack, etc.). See the
-[demo project](https://github.com/kriasoft/react-firebase-starter).
+Everything you love about **[Create React App](https://github.com/facebook/create-react-app)** plus
+server-side code support (SSR, GraphQL API, etc) and config overrides (Babel, Webpack, etc.). See
+the [demo project](https://github.com/kriasoft/react-firebase-starter).
 
 **React App SDK** is intended to be used as a drop-in replacement for `react-scripts` NPM module.
 If you want to add server-side code into your application built with Create React App, all you have
@@ -22,16 +21,17 @@ entry point for Node.js as demonstrated below:
 ```bash
 .
 ├── build/                      # Compiled output
-│   ├── public/                 # Pre-compiled client-side app
-│   └── app.js                  # Pre-compiled Node.js app
-├── src/                        # Application source files
-│   ├── components/             # React.js components
+├── src/                        # Universal application source code
+│   ├── components/             # Shared React.js components
 │   │   ├── /App/               #   - The top-level React component
 │   │   ├── /Button/            #   - Some other UI element
 │   │   └── ...                 #   - etc.
-│   ├── app.browser.js          # Client-side rendering, e.g. ReactDOM.render(<App />, container)
-│   └── app.node.js             # Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
-├── config-overrides.js         # Configuration overrides for Webpack, Babel, etc. (optional)
+│   ├── server/                 # Node.js app
+│   │   ├── ssr.js              #   - Server-side rendering, e.g. ReactDOMServer.renderToString(<App />)
+│   │   ├── api.js              #   - GraphQL API endpoint
+│   │   └── index.js            #   - Node.js app entry point
+│   └── index.js                # Client-side app entry point, e.g. ReactDOM.hydrate(<App />, container)
+├── config-overrides.js         # Configuration overrides for Webpack, etc. (optional)
 └── package.json                # List of project dependencies and NPM scripts
 ```
 
@@ -39,14 +39,18 @@ entry point for Node.js as demonstrated below:
 
 ```diff
 {
+  "main": "build/server.js",
+  "engines": {
+    "node": "8"
+  },
   "dependencies": {
 +   "express": "^4.6.13",
-    "react": "^16.2.0",
-    "react-dom": "^16.2.0"
+    "react": "^16.4.2",
+    "react-dom": "^16.4.2"
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^2.0.3"
++   "react-app-tools": "^3.0.0"
   },
   "scripts": {
 -   "start": "react-scripts start",
@@ -59,7 +63,7 @@ entry point for Node.js as demonstrated below:
 }
 ```
 
-#### `src/app.browser.js` - Client-side rendering
+#### `src/index.js` - Client-side rendering
 
 ```js
 import React from 'react';
@@ -69,14 +73,14 @@ import App from './components/App';
 ReactDOM.hydrate(<App />, document.getElementById('root'));
 ```
 
-#### `src/app.node.js` - Server-side rendering and/or API endpoint
+#### `src/server/index.js` - Server-side rendering and/or API endpoint
 
 ```js
 const path = require('path');
 const express = require('express');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
-const App = require('./components/App');
+const App = require('../components/App');
 const assets = require('./assets.json');
 
 const app = express();
@@ -127,12 +131,6 @@ overrides. Here is an example:
 
 ```js
 module.exports = {
-  babel(config, { target }) {
-    return {
-      ...config,
-      plugins: config.plugins.concact(require.resolve('babel-relay-plugin')),
-    };
-  },
   webpack(config, { target }) {
     return {
       ...config,

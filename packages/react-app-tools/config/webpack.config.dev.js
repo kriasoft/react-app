@@ -18,6 +18,7 @@ const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin');
 const getCSSModuleLocalIdent = require('react-dev-utils/getCSSModuleLocalIdent');
 const getClientEnvironment = require('./env');
 const paths = require('./paths');
+const ManifestPlugin = require('webpack-manifest-plugin');
 
 // Webpack uses `publicPath` to determine where the app is being served from.
 // In development, we always serve from the root. This makes config easier.
@@ -28,21 +29,6 @@ const publicPath = '/';
 const publicUrl = '';
 // Get environment variables to inject into our app.
 const env = getClientEnvironment(publicUrl);
-
-// Options for PostCSS as we reference these options twice
-// Adds vendor prefixing based on your specified browser support in
-// package.json
-const postCSSLoaderOptions = {
-  // Necessary for external CSS imports to work
-  // https://github.com/facebook/create-react-app/issues/2677
-  ident: 'postcss',
-  plugins: () => [
-    require('postcss-flexbugs-fixes'),
-    autoprefixer({
-      flexbox: 'no-2009',
-    }),
-  ],
-};
 
 // style files regexes
 const cssRegex = /\.css$/;
@@ -59,8 +45,21 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
       options: cssOptions,
     },
     {
+      // Options for PostCSS as we reference these options twice
+      // Adds vendor prefixing based on your specified browser support in
+      // package.json
       loader: require.resolve('postcss-loader'),
-      options: postCSSLoaderOptions,
+      options: {
+        // Necessary for external CSS imports to work
+        // https://github.com/facebook/create-react-app/issues/2677
+        ident: 'postcss',
+        plugins: () => [
+          require('postcss-flexbugs-fixes'),
+          autoprefixer({
+            flexbox: 'no-2009',
+          }),
+        ],
+      },
     },
   ];
   if (preProcessor) {
@@ -73,6 +72,7 @@ const getStyleLoaders = (cssOptions, preProcessor) => {
 // It is focused on developer experience and fast rebuilds.
 // The production configuration is different and lives in a separate file.
 module.exports = {
+  mode: 'development',
   // You may want 'eval' instead if you prefer to see the compiled output in DevTools.
   // See the discussion in https://github.com/facebook/create-react-app/issues/343.
   devtool: 'cheap-module-source-map',
@@ -113,6 +113,18 @@ module.exports = {
     // Point sourcemap entries to original disk location (format as URL on Windows)
     devtoolModuleFilenameTemplate: info =>
       path.resolve(info.absoluteResourcePath).replace(/\\/g, '/'),
+  },
+  optimization: {
+    // Automatically split vendor and commons
+    // https://twitter.com/wSokra/status/969633336732905474
+    // https://medium.com/webpack/webpack-4-code-splitting-chunk-graph-and-the-splitchunks-optimization-be739a861366
+    splitChunks: {
+      chunks: 'all',
+      name: 'vendors',
+    },
+    // Keep the runtime chunk seperated to enable long term caching
+    // https://twitter.com/wSokra/status/969679223278505985
+    runtimeChunk: true,
   },
   resolve: {
     // This allows you to set a fallback for where Webpack should look for modules.
@@ -208,14 +220,16 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
-                  // @remove-on-eject-begin
-                  babelrc: false,
-                  // @remove-on-eject-end
-                  presets: [require.resolve('babel-preset-react-app')],
+                  presets: [require.resolve('./babel')],
                   plugins: [
                     [
                       require.resolve('babel-plugin-named-asset-import'),
@@ -244,15 +258,18 @@ module.exports = {
             use: [
               // This loader parallelizes code compilation, it is optional but
               // improves compile time on larger projects
-              require.resolve('thread-loader'),
+              {
+                loader: require.resolve('thread-loader'),
+                options: {
+                  poolTimeout: Infinity, // keep workers alive for more effective watch mode
+                },
+              },
               {
                 loader: require.resolve('babel-loader'),
                 options: {
                   babelrc: false,
                   compact: false,
-                  presets: [
-                    require.resolve('babel-preset-react-app/dependencies'),
-                  ],
+                  presets: [require.resolve('./babel.dependencies')],
                   cacheDirectory: true,
                   highlightCode: true,
                 },
@@ -333,13 +350,13 @@ module.exports = {
     ],
   },
   plugins: [
-    // Add module names to factory functions so they appear in browser profiler.
-    new webpack.NamedModulesPlugin(),
     // Makes some environment variables available to the JS code, for example:
     // if (process.env.NODE_ENV === 'development') { ... }. See `./env.js`.
     new webpack.DefinePlugin(env.stringified),
     // This is necessary to emit hot updates (currently CSS only):
-    new webpack.HotModuleReplacementPlugin(),
+    new webpack.HotModuleReplacementPlugin({
+      multiStep: true,
+    }),
     // Watcher doesn't work well if you mistype casing in a path so we use
     // a plugin that prints an error when you attempt to do this.
     // See https://github.com/facebook/create-react-app/issues/240
@@ -355,7 +372,15 @@ module.exports = {
     // https://github.com/jmblog/how-to-optimize-momentjs-with-webpack
     // You can remove this if you don't use Moment.js:
     new webpack.IgnorePlugin(/^\.\/locale$/, /moment$/),
+    // Generate a manifest file which contains a mapping of all asset filenames
+    // to their corresponding output file so that tools can pick it up without
+    // having to parse `index.html`.
+    new ManifestPlugin({
+      fileName: 'asset-manifest.json',
+      publicPath: publicPath,
+    }),
   ],
+
   // Some libraries import Node modules but don't use them in the browser.
   // Tell Webpack to provide empty mocks for them so importing them works.
   node: {
@@ -365,10 +390,7 @@ module.exports = {
     tls: 'empty',
     child_process: 'empty',
   },
-  // Turn off performance hints during development because we don't do any
-  // splitting or minification in interest of speed. These warnings become
-  // cumbersome.
-  performance: {
-    hints: false,
-  },
+  // Turn off performance processing because we utilize
+  // our own hints via the FileSizeReporter
+  performance: false,
 };

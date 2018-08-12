@@ -20,14 +20,14 @@ const resolveApp = relativePath => path.resolve(appDirectory, relativePath);
 
 const envPublicUrl = process.env.PUBLIC_URL;
 
-function ensureSlash(path, needsSlash) {
-  const hasSlash = path.endsWith('/');
+function ensureSlash(inputPath, needsSlash) {
+  const hasSlash = inputPath.endsWith('/');
   if (hasSlash && !needsSlash) {
-    return path.substr(path, path.length - 1);
+    return inputPath.substr(0, inputPath.length - 1);
   } else if (!hasSlash && needsSlash) {
-    return `${path}/`;
+    return `${inputPath}/`;
   } else {
-    return path;
+    return inputPath;
   }
 }
 
@@ -53,11 +53,11 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp('build/public'), // EDIT
   nodeBuild: resolveApp('build'), // ADD
-  nodeBuildAppJs: resolveApp('build/app.js'), // ADD
+  nodeBuildAppJs: resolveApp('build/server.js'), // ADD
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/app.browser.js'), // EDIT
-  appNodeJs: resolveApp('src/app.node.js'), // ADD
+  appIndexJs: resolveApp('src/index.js'), // EDIT
+  appNodeJs: resolveApp('src/server/index.js'), // ADD
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -79,11 +79,11 @@ module.exports = {
   appPath: resolveApp('.'),
   appBuild: resolveApp('build/public'), // EDIT
   nodeBuild: resolveApp('build'), // ADD
-  nodeBuildAppJs: resolveApp('build/app.js'), // ADD
+  nodeBuildAppJs: resolveApp('build/server.js'), // ADD
   appPublic: resolveApp('public'),
   appHtml: resolveApp('public/index.html'),
-  appIndexJs: resolveApp('src/app.browser.js'), // EDIT
-  appNodeJs: resolveApp('src/app.node.js'), // ADD
+  appIndexJs: resolveApp('src/index.js'), // EDIT
+  appNodeJs: resolveApp('src/server/index.js'), // ADD
   appPackageJson: resolveApp('package.json'),
   appSrc: resolveApp('src'),
   testsSetup: resolveApp('src/setupTests.js'),
@@ -109,11 +109,11 @@ if (useTemplate) {
     appPath: resolveApp('.'),
     appBuild: resolveOwn('../../build/public'), // EDIT
     nodeBuild: resolveOwn('../../build'), // ADD
-    nodeBuildAppJs: resolveOwn('../../build/app.js'), // ADD
+    nodeBuildAppJs: resolveOwn('../../build/server.js'), // ADD
     appPublic: resolveOwn('template/public'),
     appHtml: resolveOwn('template/public/index.html'),
-    appIndexJs: resolveOwn('template/src/app.browser.js'), // EDIT
-    appNodeJs: resolveOwn('template/src/app.node.js'), // ADD
+    appIndexJs: resolveOwn('template/src/index.js'), // EDIT
+    appNodeJs: resolveOwn('template/src/server/index.js'), // ADD
     appPackageJson: resolveOwn('package.json'),
     appSrc: resolveOwn('template/src'),
     testsSetup: resolveOwn('template/src/setupTests.js'),
