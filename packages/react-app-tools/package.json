@@ -1,6 +1,6 @@
 {
   "name": "react-app-tools",
-  "version": "3.0.3",
+  "version": "3.0.5",
   "description": "Build and test tooling for web application development with Node.js and React.",
   "repository": "kriasoft/react-app",
   "author": "Kriasoft <hello@kriasoft.com> (https://www.kriasoft.com)",

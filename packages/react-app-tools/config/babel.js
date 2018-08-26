@@ -54,6 +54,7 @@ module.exports = function(api, opts) {
         {
           targets: {
             node: '8.11',
+            browsers: [],
           },
         },
       ],
