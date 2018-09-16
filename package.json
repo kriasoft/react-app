@@ -1,16 +1,17 @@
 {
-	"name": "react-app",
-	"version": "2.0.0",
+  "name": "react-app",
+  "version": "2.0.0",
   "private": true,
   "workspaces": [
     "packages/*"
   ],
-	"devDependencies": {
-		"eslint": "4.15.0",
-		"husky": "^0.14.3",
-		"lerna": "^2.9.0",
-		"lint-staged": "^6.1.1",
-		"prettier": "^1.10.2"
+  "devDependencies": {
+    "eslint": "4.15.0",
+    "husky": "^0.14.3",
+    "lerna": "^2.9.0",
+    "lint-staged": "^6.1.1",
+    "prettier": "^1.10.2",
+    "react-scripts": "2.0.0-next.a671462c"
   },
   "lint-staged": {
     "*.js": [
