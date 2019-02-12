@@ -81,7 +81,7 @@ const express = require('express');
 const React = require('react');
 const ReactDOMServer = require('react-dom/server');
 const App = require('../components/App');
-const assets = require('./assets.json');
+const stats = require('./stats.json');
 
 const app = express();
 
@@ -90,7 +90,9 @@ app.get('*', (req, res) => {
     <html>
       <body>
         <div id="root">${ReactDOMServer.renderToString(<App />)}</div>
-        ${assets.map(src => `<script src="${src}"></script>`)}
+        ${stats.entrypoints.main.assets.map(
+          src => `<script src="${src}"></script>`
+        )}
       </body>
     </html>
   `);
@@ -117,8 +119,8 @@ When you’re ready to deploy to production, create a minified bundle with `npm 
 
 For more information refer to Create React App documentation:
 
-* [Getting Started](https://github.com/facebookincubator/create-react-app#getting-started) – How to create a new app.
-* [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
+- [Getting Started](https://github.com/facebookincubator/create-react-app#getting-started) – How to create a new app.
+- [User Guide](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md) – How to develop apps bootstrapped with Create React App.
 
 Join our Telegram chat for support and feature requests - https://t.me/reactapp
 

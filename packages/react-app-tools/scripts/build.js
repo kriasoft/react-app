@@ -22,42 +22,38 @@ process.on('unhandledRejection', err => {
 // Ensure environment variables are read.
 require('../config/env');
 // @remove-on-eject-begin
-// Do the preflight check (only happens before eject).
+// Do the preflight checks (only happens before eject).
 const verifyPackageTree = require('./utils/verifyPackageTree');
 if (process.env.SKIP_PREFLIGHT_CHECK !== 'true') {
   verifyPackageTree();
 }
+const verifyTypeScriptSetup = require('./utils/verifyTypeScriptSetup');
+verifyTypeScriptSetup();
 // @remove-on-eject-end
 
 const path = require('path');
-const chalk = require('chalk');
+const chalk = require('react-dev-utils/chalk');
 const fs = require('fs-extra');
 const webpack = require('webpack');
 const bfj = require('bfj');
+const configFactory = require('../config/webpack.configFactory'); // EDIT
 const paths = require('../config/paths');
-const customize = require('../customize');
-const config = customize('webpack', require('../config/webpack.config.prod'), {
-  target: 'browser',
-});
-const configServer = customize(
-  'webpack',
-  require('../config/webpack.config.server')('prod'),
-  { target: 'node' }
-);
 const checkRequiredFiles = require('react-dev-utils/checkRequiredFiles');
-// const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
+const formatWebpackMessages = require('react-dev-utils/formatWebpackMessages');
 const printHostingInstructions = require('react-dev-utils/printHostingInstructions');
 const FileSizeReporter = require('react-dev-utils/FileSizeReporter');
 const printBuildError = require('react-dev-utils/printBuildError');
-const { printBrowsers } = require('react-dev-utils/browsersHelper');
 
 const measureFileSizesBeforeBuild =
   FileSizeReporter.measureFileSizesBeforeBuild;
 const printFileSizesAfterBuild = FileSizeReporter.printFileSizesAfterBuild;
+const useYarn = fs.existsSync(paths.yarnLockFile);
 
 // These sizes are pretty large. We'll warn for bundles exceeding them.
 const WARN_AFTER_BUNDLE_GZIP_SIZE = 512 * 1024;
 const WARN_AFTER_CHUNK_GZIP_SIZE = 1024 * 1024;
+
+const isInteractive = process.stdout.isTTY;
 
 // Warn and crash if required files are missing
 if (!checkRequiredFiles([paths.appIndexJs, paths.appNodeJs])) {
@@ -68,10 +64,13 @@ if (!checkRequiredFiles([paths.appIndexJs, paths.appNodeJs])) {
 const argv = process.argv.slice(2);
 const writeStatsJson = argv.indexOf('--stats') !== -1;
 
-// We require that you explictly set browsers and do not fall back to
+// Generate configuration
+const [config, nodeConfig] = configFactory('production');
+
+// We require that you explicitly set browsers and do not fall back to
 // browserslist defaults.
 const { checkBrowsers } = require('react-dev-utils/browsersHelper');
-checkBrowsers(paths.appPath)
+checkBrowsers(paths.appPath, isInteractive)
   .then(() => {
     // First, read the current file sizes in build directory.
     // This lets us display how much they changed later.
@@ -124,14 +123,9 @@ checkBrowsers(paths.appPath)
         publicUrl,
         publicPath,
         buildFolder,
-        paths.useYarn
+        useYarn
       );
-      printBrowsers(paths.appPath);
-      fs.outputJsonSync(
-        paths.assetsJson,
-        stats.toJson({}, true).assetsByChunkName,
-        { spaces: 2 }
-      );
+      fs.outputJsonSync(paths.stats, stats.toJson({}, true), { spaces: 2 });
     },
     err => {
       console.log(chalk.red('Failed to compile.\n'));
@@ -150,13 +144,23 @@ checkBrowsers(paths.appPath)
 function build(previousFileSizes) {
   console.log('Creating an optimized production build...');
 
-  let compiler = webpack([config, configServer]);
+  let compiler = webpack([config, nodeConfig]);
   return new Promise((resolve, reject) => {
     compiler.run((err, stats) => {
+      let messages;
       if (err) {
-        return reject(err);
+        if (!err.message) {
+          return reject(err);
+        }
+        messages = formatWebpackMessages({
+          errors: [err.message],
+          warnings: [],
+        });
+      } else {
+        messages = formatWebpackMessages(
+          stats.toJson({ all: false, warnings: true, errors: true })
+        );
       }
-      const messages = stats.toJson({}, true); // formatWebpackMessages(stats.toJson({}, true));
       if (messages.errors.length) {
         // Only keep the first error. Others are often indicative
         // of the same problem, but confuse the reader with noise.

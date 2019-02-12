@@ -1,5 +1,8 @@
 .vscode/*
 !.vscode/settings.json
-node_modules
+node_modules/
+.DS_Store
+*.tgz
 lerna-debug.log
-yarn-error.log
+yarn-debug.log*
+yarn-error.log*
