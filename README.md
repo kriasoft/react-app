@@ -31,7 +31,6 @@ entry point for Node.js as demonstrated below:
 │   │   ├── api.js              #   - GraphQL API endpoint
 │   │   └── index.js            #   - Node.js app entry point
 │   └── index.js                # Client-side app entry point, e.g. ReactDOM.hydrate(<App />, container)
-├── config-overrides.js         # Configuration overrides for Webpack, etc. (optional)
 └── package.json                # List of project dependencies and NPM scripts
 ```
 
@@ -41,24 +40,24 @@ entry point for Node.js as demonstrated below:
 {
   "main": "build/server.js",
   "engines": {
-    "node": "8"
+    "node": ">=8.10"
   },
   "dependencies": {
-+   "express": "^4.6.13",
-    "react": "^16.4.2",
-    "react-dom": "^16.4.2"
++   "express": "^4.6.14",
+    "react": "^16.8.4",
+    "react-dom": "^16.8.4"
   },
   {
 -   "react-scripts": "^1.1.1"
-+   "react-app-tools": "^3.0.5"
++   "react-app-tools": "^3.1.0-preview.7"
   },
   "scripts": {
 -   "start": "react-scripts start",
 +   "start": "react-app start",
 -   "build": "react-scripts build",
 +   "build": "react-app build",
--   "test": "react-scripts test --env=jsdom"
-+   "test": "react-app test --env=jsdom"
+-   "test": "react-scripts test"
++   "test": "react-app test"
   }
 }
 ```
@@ -128,19 +127,26 @@ Join our Telegram chat for support and feature requests - https://t.me/reactapp
 
 ## How to Customize
 
-Create `config-overrides.js` file in the root of your project containing with configuration
-overrides. Here is an example:
+Create `webpack.config.js` file in the root of your project that extends the
+default Webpack configuration. For example:
 
 ```js
-module.exports = {
-  webpack(config, { target }) {
-    return {
-      ...config,
-      plugins: target === 'node'
-        ? config.plugins.concat(new LimitChunkCountPlugin({ maxChunks: 1 })),
-        : config.plugins
-    };
-  }
+module.exports = () => {
+  const [
+    browserConfig,
+    serverConfig,
+  ] = require('react-app-tools/config/webpack');
+  return [
+    browserConfig,
+    {
+      ...serverConfig,
+      plugins: {
+        ...serverConfig.plugins.concat(
+          new LimitChunkCountPlugin({ maxChunks: 1 })
+        ),
+      },
+    },
+  ];
 };
 ```
 

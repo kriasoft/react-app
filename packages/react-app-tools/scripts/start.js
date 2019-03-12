@@ -72,7 +72,7 @@ if (process.env.HOST) {
     `If this was unintentional, check that you haven't mistakenly set it in your shell.`
   );
   console.log(
-    `Learn more here: ${chalk.yellow('http://bit.ly/CRA-advanced-config')}`
+    `Learn more here: ${chalk.yellow('https://bit.ly/CRA-advanced-config')}`
   );
   console.log();
 }
@@ -94,15 +94,24 @@ checkBrowsers(paths.appPath, isInteractive)
     const [config, nodeConfig] = configFactory('development');
     const protocol = process.env.HTTPS === 'true' ? 'https' : 'http';
     const appName = require(paths.appPackageJson).name;
+    const useTypeScript = fs.existsSync(paths.appTsConfig);
     const urls = prepareUrls(protocol, HOST, port);
+    const devSocket = {
+      warnings: warnings =>
+        devServer.sockWrite(devServer.sockets, 'warnings', warnings),
+      errors: errors =>
+        devServer.sockWrite(devServer.sockets, 'errors', errors),
+    };
     // Create a webpack compiler that is configured with custom messages.
-    const compiler = createCompiler(
-      webpack,
-      [config, nodeConfig],
+    const compiler = createCompiler({
       appName,
+      config: [config, nodeConfig],
+      devSocket,
       urls,
-      useYarn
-    );
+      useYarn,
+      useTypeScript,
+      webpack,
+    });
     // Load proxy config
     const proxySetting = require(paths.appPackageJson).proxy;
     const proxyConfig = prepareProxy(proxySetting, paths.appPublic);
