@@ -47,7 +47,7 @@ entry point for Node.js as demonstrated below:
     "react": "^16.8.4",
     "react-dom": "^16.8.4"
   },
-  {
+  "devDependencies": {
 -   "react-scripts": "^1.1.1"
 +   "react-app-tools": "^3.1.0-preview.7"
   },
