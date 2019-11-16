@@ -123,7 +123,7 @@ For more information refer to Create React App documentation:
 
 Join our Telegram chat for support and feature requests - https://t.me/reactapp
 
-<p align="center"><a href="https://www.youtube.com/watch?v=GH3kJwQ7mxM"><img src="http://img.youtube.com/vi/GH3kJwQ7mxM/maxresdefault.jpg" width="1187" alt="Server-side rendering with React.js" /><br /><sup>How fast is React SSR?</sup></a></p>
+<p align="center"><a href="https://www.youtube.com/watch?v=GH3kJwQ7mxM"><img src="https://img.youtube.com/vi/GH3kJwQ7mxM/maxresdefault.jpg" width="1187" alt="Server-side rendering with React.js" /><br /><sup>How fast is React SSR?</sup></a></p>
 
 ## How to Customize
 
